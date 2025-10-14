@@ -1106,11 +1106,7 @@ export default function EduCRMLanding(){
 
       <Metrics/>
       {/* Section bố cục trái–phải (event-style) */}
-      <FeatureEvent
-        title="Tạo sự kiện thực & chi tiết sự kiện"
-        desc="XinKEdu cho phép bạn tạo các sự kiện thực sự với đầy đủ chi tiết, mở/đóng linh hoạt và tùy biến theo nhu cầu."
-        bullets={["Tạo sự kiện linh hoạt", "Mở/đóng sự kiện bất cứ lúc nào"]}
-      />
+      
       <ProductOverview/>
       <Features/>
       <Pricing/>
