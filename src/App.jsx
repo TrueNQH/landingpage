@@ -619,7 +619,7 @@ function Pricing(){
     {
       ribbon: 'Basic',
       gradient: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
-      price: '2.499',
+      price: '800',
       unit: '000đ',
       features: [
         
@@ -639,7 +639,7 @@ function Pricing(){
     {
       ribbon: 'Advance',
       gradient: 'linear-gradient(135deg, #22D3EE, #3B82F6)',
-      price: '2.499',
+      price: '1.299',
       unit: '000đ',
       features: [
         'Bao gồm toàn bộ Basic',
