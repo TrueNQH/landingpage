@@ -19,7 +19,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    background: linear-gradient(180deg, #ffffff 0%, #f3f8ff 50%, #eaf2ff 100%);
+    /* dịu nền hơn, giảm độ xanh, thêm tím rất nhạt */
+    background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 45%, #eef4ff 75%, #f5f3ff 100%);
     min-height: 100%;
   }
 }

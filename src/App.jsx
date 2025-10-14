@@ -18,8 +18,8 @@ const btn =
 
 // 🌈 Gradient tokens
 const GRADIENTS = {
-  primary: "linear-gradient(135deg, #3B82F6, #06B6D4)",
-  secondary: "linear-gradient(135deg, #22D3EE, #3B82F6)",
+  primary: "linear-gradient(135deg, #4F8DF7, #14C6D6)", // xanh hơi sáng hơn + cyan tươi
+  secondary: "linear-gradient(135deg, #2DD5EE, #4A87F8)", // cyan→blue dịu mắt hơn
 };
 
 // 🔘 Reusable gradient button
@@ -171,18 +171,7 @@ function Hero({ onOpenLogin }) {
               </a>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 animate-fade-in-up" style={{animationDelay: '0.8s'}}>
-              {[
-                { icon: <Zap size={20} className="text-white animate-pulse"/>, text: "Triển khai nhanh" },
-                { icon: <Lock size={20} className="text-white animate-pulse"/>, text: "Bảo mật cao" },
-                { icon: <Globe size={20} className="text-white animate-pulse"/>, text: "Hỗ trợ 24/7" },
-              ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-xl bg-white/20 border border-white/30 shadow-sm backdrop-blur hover:bg-white/30 hover:scale-105 transition-all duration-300">
-                  {item.icon}
-                  <span className="text-white font-medium">{item.text}</span>
-                </div>
-              ))}
-            </div>
+            
           </div>
 
           <div className="relative lg:ml-8 animate-fade-in-right" style={{animationDelay: '0.9s'}}>
@@ -190,6 +179,45 @@ function Hero({ onOpenLogin }) {
             <div className="relative rounded-3xl overflow-hidden ring-1 ring-white/30 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <video src="video.mp4" autoPlay muted loop playsInline className="w-full h-96 object-cover"></video>
             </div>
+            <div
+  className="
+    grid gap-4 pt-4
+    grid-cols-1 sm:grid-cols-3
+    animate-fade-in-up
+  "
+  style={{ animationDelay: '0.8s' }}
+>
+  {[
+    { icon: <Zap size={20} />,  text: "Triển khai nhanh" },
+    { icon: <Lock size={20} />, text: "Bảo mật cao" },
+    { icon: <Globe size={20} />, text: "Hỗ trợ 24/7" }, // sửa chính tả
+  ].map((item, i) => (
+    <button
+      key={i}
+      type="button"
+      className="
+        group w-full rounded-2xl
+        bg-white/10 backdrop-blur
+        ring-1 ring-white/30
+        text-white font-medium
+        px-4 py-3
+        flex items-center justify-center gap-2
+        shadow-[0_6px_20px_-6px_rgba(2,132,199,.35)]
+        transition-all duration-300
+        hover:bg-white/15 hover:ring-white/40 hover:translate-y-[-1px]
+        focus:outline-none focus:ring-2 focus:ring-white/50
+      "
+      aria-label={item.text}
+    >
+      <span className="shrink-0 opacity-90 transition-transform duration-300 group-hover:scale-110">
+        {item.icon}
+      </span>
+      <span className="whitespace-nowrap">{item.text}</span>
+    </button>
+  ))}
+</div>
+
+
           </div>
         </div>
       </div>
@@ -1077,6 +1105,12 @@ export default function EduCRMLanding(){
       <Hero onOpenLogin={onOpenLogin}/>
 
       <Metrics/>
+      {/* Section bố cục trái–phải (event-style) */}
+      <FeatureEvent
+        title="Tạo sự kiện thực & chi tiết sự kiện"
+        desc="XinKEdu cho phép bạn tạo các sự kiện thực sự với đầy đủ chi tiết, mở/đóng linh hoạt và tùy biến theo nhu cầu."
+        bullets={["Tạo sự kiện linh hoạt", "Mở/đóng sự kiện bất cứ lúc nào"]}
+      />
       <ProductOverview/>
       <Features/>
       <Pricing/>
