@@ -18,8 +18,8 @@ const btn =
 
 // 🌈 Gradient tokens
 const GRADIENTS = {
-  primary: "linear-gradient(135deg, #4F8DF7, #14C6D6)", // xanh hơi sáng hơn + cyan tươi
-  secondary: "linear-gradient(135deg, #2DD5EE, #4A87F8)", // cyan→blue dịu mắt hơn
+  primary: "linear-gradient(135deg, #3B82F6, #06B6D4)",
+  secondary: "linear-gradient(135deg, #22D3EE, #3B82F6)",
 };
 
 // 🔘 Reusable gradient button
@@ -49,9 +49,9 @@ function GBadge({ children, gradient = "secondary", className = "" }) {
 }
 
 // 🧱 Section with gradient background
-function GSection({ gradient = "primary", children, className = "", overlay = false }) {
+function GSection({ gradient = "primary", children, className = "", overlay = false, id }) {
   return (
-    <section className={`relative overflow-hidden ${className}`} style={{ background: GRADIENTS[gradient] }}>
+    <section id ={id} className={`relative overflow-hidden ${className}`} style={{ background: GRADIENTS[gradient] }}>
       {overlay && <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 1px 1px, rgba(0,0,0,.18) 1px, transparent 0)", backgroundSize: "22px 22px", opacity: 0.12 }} />}
       {children}
     </section>
@@ -63,35 +63,41 @@ function Navbar({ onOpenLogin }) {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 border-b border-slate-200/60 shadow-sm">
-      <div className={`${container} h-16 flex items-center justify-between`}>
+      <div className={`${container} h-18 flex items-center justify-between`}>
         <div className="flex items-center gap-3">
           <div className="size-12 flex justify-center items-center">
-            <img src="logo.png" alt="logo" />
+            <img style={{maxWidth: "130%"}} src="logo.png" alt="logo" />
           </div>
         </div>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm text-slate-700">
+        {/* Tăng font nav: md:15px, lg:16px, xl:18px */}
+        <nav className="hidden md:flex items-center gap-8 text-[15px] lg:text-base xl:text-lg text-slate-700">
           <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#features">Tính năng</a>
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#pricing">Lợi ích</a>
+          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#pricing">Giá dịch vụ</a>
           <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#testimonials">Đánh giá</a>
           <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#faq">FAQ</a>
           <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#contact">Liên hệ</a>
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#contact" className="hidden sm:inline-flex items-center gap-2 border border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200">
-            <MessageCircle size={16} />
+          {/* Tăng text-sm -> text-base, icon 16 -> 18 */}
+          <a
+            href="#contact"
+            className="hidden sm:inline-flex items-center gap-2 border border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 rounded-xl px-4 py-2 text-base font-medium transition-all duration-200"
+          >
+            <MessageCircle size={18} />
             Liên hệ
           </a>
 
+          {/* Tăng icon 16 -> 18, chữ theo mặc định của GButton; thêm text-base để đảm bảo lớn hơn */}
           <GButton
             as="a"
             href="#demo"
             onClick={(e) => { e.preventDefault(); onOpenLogin && onOpenLogin(); }}
             gradient="secondary"
-            className="px-5 py-2.5"
+            className="px-5 py-2.5 text-base"
           >
-            <Zap size={16} />
+            <Zap size={18} />
             Dùng thử
           </GButton>
 
@@ -99,7 +105,7 @@ function Navbar({ onOpenLogin }) {
             className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -108,13 +114,14 @@ function Navbar({ onOpenLogin }) {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-200 shadow-lg">
           <div className="px-4 py-4 space-y-3">
-            <a className="block py-2 text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#features" onClick={() => setMobileMenuOpen(false)}>Tính năng</a>
-            <a className="block py-2 text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#pricing" onClick={() => setMobileMenuOpen(false)}>Lợi ích</a>
-            <a className="block py-2 text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Đánh giá</a>
-            <a className="block py-2 text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-            <a className="block py-2 text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#contact" onClick={() => setMobileMenuOpen(false)}>Liên hệ</a>
+            {/* Tăng text-base cho mobile */}
+            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#features" onClick={() => setMobileMenuOpen(false)}>Tính năng</a>
+            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#pricing" onClick={() => setMobileMenuOpen(false)}>Giá dịch vụ</a>
+            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Đánh giá</a>
+            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#contact" onClick={() => setMobileMenuOpen(false)}>Liên hệ</a>
             <div className="pt-3 border-t border-slate-200">
-              <GButton as="a" href="#demo" className="block w-full justify-center">Dùng thử miễn phí</GButton>
+              <GButton as="a" href="#demo" className="block w-full justify-center text-base py-3">Dùng thử miễn phí</GButton>
             </div>
           </div>
         </div>
@@ -123,10 +130,21 @@ function Navbar({ onOpenLogin }) {
   );
 }
 
+
 function Hero({ onOpenLogin }) {
   return (
     <GSection gradient="primary" overlay className="text-slate-800">
-      <div className={`${container} ${section} pt-16 pb-12`}>
+     <div
+  className={`
+    ${container} ${section}
+    pt-10 md:pt-24 pb-10 md:pb-12
+    md:min-h-[calc(100dvh-64px)]
+    supports-[height:100svh]:md:min-h-[calc(100svh-64px)]
+    lg:h-[calc(100dvh-64px)]
+    supports-[height:100svh]:lg:h-[calc(100svh-64px)]
+  `}
+>
+
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="space-y-6">
@@ -171,7 +189,7 @@ function Hero({ onOpenLogin }) {
               </a>
             </div>
 
-            
+           
           </div>
 
           <div className="relative lg:ml-8 animate-fade-in-right" style={{animationDelay: '0.9s'}}>
@@ -179,45 +197,7 @@ function Hero({ onOpenLogin }) {
             <div className="relative rounded-3xl overflow-hidden ring-1 ring-white/30 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105">
               <video src="video.mp4" autoPlay muted loop playsInline className="w-full h-96 object-cover"></video>
             </div>
-            <div
-  className="
-    grid gap-4 pt-4
-    grid-cols-1 sm:grid-cols-3
-    animate-fade-in-up
-  "
-  style={{ animationDelay: '0.8s' }}
->
-  {[
-    { icon: <Zap size={20} />,  text: "Triển khai nhanh" },
-    { icon: <Lock size={20} />, text: "Bảo mật cao" },
-    { icon: <Globe size={20} />, text: "Hỗ trợ 24/7" }, // sửa chính tả
-  ].map((item, i) => (
-    <button
-      key={i}
-      type="button"
-      className="
-        group w-full rounded-2xl
-        bg-white/10 backdrop-blur
-        ring-1 ring-white/30
-        text-white font-medium
-        px-4 py-3
-        flex items-center justify-center gap-2
-        shadow-[0_6px_20px_-6px_rgba(2,132,199,.35)]
-        transition-all duration-300
-        hover:bg-white/15 hover:ring-white/40 hover:translate-y-[-1px]
-        focus:outline-none focus:ring-2 focus:ring-white/50
-      "
-      aria-label={item.text}
-    >
-      <span className="shrink-0 opacity-90 transition-transform duration-300 group-hover:scale-110">
-        {item.icon}
-      </span>
-      <span className="whitespace-nowrap">{item.text}</span>
-    </button>
-  ))}
-</div>
-
-
+          
           </div>
         </div>
       </div>
@@ -249,24 +229,30 @@ function Metrics() {
   return (
     <GSection gradient="primary" className="">
       <div className={`${container} ${section}`}>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-white mb-4">Số liệu ấn tượng</h2>
-          <p className="text-lg text-white/90">Những con số chứng minh hiệu quả của XinKEdu</p>
+        <div className="text-center mb-12 animate-fade-in-up">
+          <h2 className="text-3xl font-bold text-white mb-4 animate-scale-in stagger-1">Số liệu ấn tượng</h2>
+          <p className="text-lg text-white/90 animate-fade-in-up stagger-2">Những con số chứng minh hiệu quả của XinKEdu</p>
         </div>
         <div className="grid sm:grid-cols-3 gap-8">
           {items.map((item, index) => (
-            <div key={item.label} className="group relative animate-fade-in-up" style={{animationDelay: `${0.1 + index * 0.2}s`}}>
-              <div className="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 hover:shadow-xl hover:ring-blue-200 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105">
+            <div key={item.label} className={`group relative animate-bounce-in stagger-${index + 3}`}>
+              <div className="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 hover:shadow-xl hover:ring-blue-200 transition-all duration-500 hover-lift">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 rounded-2xl bg-slate-50 group-hover:bg-blue-50 transition-colors duration-300">
                     {item.icon}
                   </div>
                   <div className="text-right">
-                    <p className="text-4xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">{item.value}</p>
-                    <p className="text-sm text-slate-500">{item.description}</p>
+                    <p className="text-4xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors duration-300 group-hover:scale-110">{item.value}</p>
+                    <p className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors duration-300">{item.description}</p>
                   </div>
                 </div>
-                <p className="text-lg font-semibold text-slate-700">{item.label}</p>
+                <p className="text-lg font-semibold text-slate-700 group-hover:text-slate-800 transition-colors duration-300">{item.label}</p>
+                
+                {/* Floating particles */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-float" style={{animationDelay: '0s'}} />
+                  <div className="w-1 h-1 bg-cyan-400 rounded-full animate-float mt-2" style={{animationDelay: '0.5s'}} />
+                </div>
               </div>
             </div>
           ))}
@@ -276,27 +262,6 @@ function Metrics() {
   );
 }
 
-function ProductOverview() {
-  return (
-    <section id="overview" className="bg-white">
-      <div className={`${container} ${section}`}>
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">Tổng quan hiệu suất</h2>
-          <p className="mt-3 text-slate-600">Trực quan dữ liệu doanh thu, tỷ lệ chuyển đổi, tình trạng lớp & đội ngũ.</p>
-        </div>
-        <div className="mt-10 rounded-3xl overflow-hidden ring-1 ring-slate-200 shadow-sm">
-          <img
-            src="dashboard.png"
-            alt="Tổng quan số liệu và KPI của XinKEdu"
-            className=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function FeatureRow({ reverse=false, title, desc, bullets, img, icon }) {
   return (
@@ -339,7 +304,7 @@ function FeatureRow({ reverse=false, title, desc, bullets, img, icon }) {
   );
 }
 
-function Features() {
+function Feature() {
   return (
     <section id="features" className="bg-white">
       <div className={`${container} ${section} space-y-24`}>
@@ -477,141 +442,192 @@ function Features() {
     </section>
   );
 }
-function FeatureEvent({
-  title = "Create the Real Event & Event Details",
-  desc = "Quicklearn allows you to create genuine Events and Event Details whenever and how you want. It also includes:",
-  bullets = ["Flexible Event Create", "Anytime Event Open & Close"],
-  mainImg, // ảnh nền chính (UI lớn bên phải) — ví dụ: '/img/event-main.png'
-  gridImg, // ảnh danh sách nhỏ — ví dụ: '/img/event-grid.png'
-}) {
+function Features() {
+  const items = [
+    {
+      title: "Xếp lịch dạy cho giáo viên",
+      desc: "Sắp xếp ca dạy trực quan, tránh trùng lịch, tự động nhắc lịch qua Zalo/Email để mọi người luôn đúng giờ.",
+      bullets: [
+        "Lịch tuần/tháng, kéo-thả ca dạy",
+        "Cảnh báo trùng phòng/giờ/giáo viên",
+        "Nhắc lịch & đổi ca nhanh",
+      ],
+      icon: <Clock size={28} />,
+    },
+    {
+      title: "Tạo đề thi bằng AI",
+      desc: "Sinh đề theo chủ đề, độ khó, chuẩn đầu ra. Hỗ trợ nhiều loại câu hỏi và gợi ý chấm điểm nhanh.",
+      bullets: [
+        "Trắc nghiệm/Đúng-Sai/Điền khuyết/Tự luận",
+        "Điều chỉnh độ khó, mục tiêu kỹ năng",
+        "Nhận xét AI + phân tích điểm",
+      ],
+      icon: <BookOpen size={28} />,
+    },
+    {
+      title: "Tạo đề từ ảnh (OCR)",
+      desc: "Chụp/tải ảnh đề giấy, hệ thống OCR hoá và chuẩn hóa câu hỏi. Xuất Word/PDF trong vài giây.",
+      bullets: [
+        "Nhận diện tiếng Việt/EN chính xác",
+        "Giữ ký hiệu, chuẩn hóa bố cục",
+        "Random phương án, chống lộ đáp án",
+      ],
+      icon: <GraduationCap size={28} />,
+    },
+    {
+      title: "Check-in / Check-out dạy học",
+      desc: "Điểm danh ca dạy bằng một chạm, kèm GPS và ghi chú. Tự tổng hợp bảng công hỗ trợ tính lương.",
+      bullets: [
+        "Theo dõi vị trí & thời gian",
+        "Xác thực + ghi chú ca dạy",
+        "Bảng công tự động",
+      ],
+      icon: <Shield size={28} />,
+    },
+    {
+      title: "AI trợ giảng Live",
+      desc: "Theo dõi buổi dạy thời gian thực, gợi ý tương tác, đánh dấu highlight và xuất báo cáo sau buổi.",
+      bullets: [
+        "Hỏi-đáp AI trong lớp",
+        "Lấy phản hồi học sinh",
+        "Báo cáo: highlight, to-do",
+      ],
+      icon: <LineChart size={28} />,
+    },
+    {
+      title: "Thi & xem điểm online",
+      desc: "Tổ chức thi trên web/mobile, chống gian lận nhẹ, công bố điểm và lời giải ngay sau khi nộp.",
+      bullets: [
+        "Phòng thi theo lịch",
+        "Xem điểm + đáp án",
+        "Ôn tập & tổng hợp kiến thức",
+      ],
+      icon: <CheckCircle2 size={28} />,
+    },
+  ];
+
   return (
-    <section className="relative mx-auto max-w-6xl px-4 py-16 sm:py-24">
-      {/* trang trí nền */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute right-24 top-24 h-24 w-24 rounded-full border-2 border-violet-100/60" />
-        <div className="absolute right-12 top-56 grid h-16 w-16 grid-cols-4 gap-1 opacity-40">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <span key={i} className="rounded-sm border border-fuchsia-200/60" />
+    <section id="features" className="bg-white">
+      <div className={`${container} ${section} space-y-16 lg:space-y-20`}>
+        <div className="text-center max-w-3xl mx-auto animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 animate-scale-in stagger-1">
+            Tính năng nổi bật
+          </h2>
+          <p className="text-xl text-slate-600 animate-fade-in-up stagger-2">
+            Giải pháp toàn diện cho mọi nhu cầu quản lý giáo dục
+          </p>
+        </div>
+
+        {/* GRID features: không ảnh minh họa */}
+        <div className="grid gap-6 md:gap-8 md:grid-cols-2">
+          {items.map((it, i) => (
+            <FeatureCard key={i} {...it} index={i} />
           ))}
         </div>
-        <svg className="absolute left-1/2 top-2/3 -translate-x-1/2 opacity-30" width="160" height="40" viewBox="0 0 160 40" fill="none">
-          <path d="M2 30c12-22 28-22 40 0s28 22 40 0 28-22 40 0 28 22 36 0" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" />
-        </svg>
+
+        {/* --- Tính năng Đặc biệt --- */}
+        <div className="space-y-8 animate-fade-in-up stagger-3">
+          <div className="text-center max-w-3xl mx-auto">
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 animate-bounce-in stagger-4">
+              Tính năng đặc biệt
+            </h3>
+            <p className="mt-3 text-slate-600 animate-fade-in-up stagger-5">
+              Bộ công cụ nâng cao giúp trung tâm vận hành trơn tru và minh bạch.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* CRM + Nhân sự */}
+            <div className="group relative animate-slide-up-stagger stagger-6">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-300 hover-lift">
+                <div className="flex items-center gap-3 mb-3">
+                  <Shield className="text-blue-600" size={22} />
+                  <p className="text-lg font-semibold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">
+                    CRM & Quản lý nhân sự
+                  </p>
+                </div>
+                <ul className="space-y-2 text-slate-700">
+                  <li className="group-hover:translate-x-1 transition-transform duration-300">• Quản lý lead/khách hàng, pipeline tuyển sinh</li>
+                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '50ms'}}>• Hồ sơ giáo viên/nhân sự, phân quyền chi tiết</li>
+                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '100ms'}}>• KPI & bảng công đồng bộ từ check-in/ca dạy</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Kế toán */}
+            <div className="group relative animate-slide-up-stagger stagger-6">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-300 hover-lift">
+                <div className="flex items-center gap-3 mb-3">
+                  <LineChart className="text-emerald-600" size={22} />
+                  <p className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors duration-300">
+                    Hỗ trợ kế toán
+                  </p>
+                </div>
+                <ul className="space-y-2 text-slate-700">
+                  <li className="group-hover:translate-x-1 transition-transform duration-300">• Thu học phí, công nợ, phiếu thu/chi</li>
+                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '50ms'}}>• Doanh thu – chi phí theo lớp, khóa</li>
+                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '100ms'}}>• Xuất file kế toán & đối soát minh bạch</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* --- End: Tính năng Đặc biệt --- */}
       </div>
+    </section>
+  );
+}
 
-      <div className="grid items-center gap-10 lg:grid-cols-2">
-        {/* LEFT: text */}
-        <div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            {title}
-          </h2>
-          <p className="mt-4 text-slate-600">{desc}</p>
-
-          <ul className="mt-6 space-y-3">
+/** Card không dùng ảnh, icon + text + bullets */
+function FeatureCard({ icon, title, desc, bullets, index = 0 }) {
+  return (
+    <div className={`group relative overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-slate-200 shadow-lg transition-all duration-500 hover:shadow-2xl hover:ring-blue-200 hover-lift animate-slide-up-stagger stagger-${(index % 6) + 1}`}>
+      {/* halo gradient nhẹ để thay "hình minh hoạ" */}
+      <div className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-gradient-to-br from-sky-200/60 to-cyan-100/40 blur-3xl opacity-60 group-hover:opacity-90 transition-all duration-500 group-hover:scale-110" />
+      
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer" />
+      
+      <div className="flex items-start gap-4 relative z-10">
+        <div className="shrink-0 grid place-items-center size-12 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 text-white shadow-lg group-hover:shadow-xl transition-all duration-300">
+          {icon}
+        </div>
+        <div className="flex-1">
+          <h4 className="text-lg font-semibold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">{title}</h4>
+          <p className="mt-2 text-slate-600 group-hover:text-slate-700 transition-colors duration-300">{desc}</p>
+          <ul className="mt-4 space-y-2 text-slate-700">
             {bullets.map((b, i) => (
-              <li key={i} className="flex items-start gap-3 text-slate-700">
-                <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600">
-                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-white">
-                    <path fill="currentColor" d="M9.5 16.2 5.8 12.5l1.4-1.4 2.3 2.3 6.4-6.4 1.4 1.4z" />
-                  </svg>
-                </span>
-                <span className="font-medium">{b}</span>
+              <li key={i} className="flex gap-2 group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: `${i * 50}ms`}}>
+                <span className="mt-1 size-1.5 rounded-full bg-sky-500/80 group-hover:bg-blue-500 transition-colors duration-300" />
+                <span className="group-hover:text-slate-800 transition-colors duration-300">{b}</span>
               </li>
             ))}
           </ul>
         </div>
-
-        {/* RIGHT: stacked mockups */}
-        <div className="relative mx-auto w-full max-w-xl">
-          {/* card nền lớn */}
-          <div className="relative rounded-2xl border border-slate-200 bg-white/90 shadow-xl backdrop-blur-sm">
-            <div className="p-4 sm:p-6">
-              {/* nếu có ảnh thật */}
-              {mainImg ? (
-                <img
-                  src={mainImg}
-                  alt="Event UI"
-                  className="h-64 w-full rounded-xl object-cover sm:h-72"
-                />
-              ) : (
-                // mock UI
-                <div className="h-64 w-full rounded-xl bg-gradient-to-br from-slate-50 to-violet-50 sm:h-72">
-                  <div className="grid h-full grid-cols-12 gap-3 p-4">
-                    <div className="col-span-4 space-y-3">
-                      <div className="h-8 rounded-md bg-slate-200/80" />
-                      <div className="h-8 rounded-md bg-slate-200/60" />
-                      <div className="h-8 rounded-md bg-slate-200/40" />
-                      <div className="h-8 rounded-md bg-slate-200/30" />
-                    </div>
-                    <div className="col-span-8 space-y-3">
-                      {[...Array(4)].map((_, i) => (
-                        <div key={i} className="flex items-center gap-3 rounded-lg bg-white p-3 shadow">
-                          <div className="h-10 w-20 rounded bg-indigo-100" />
-                          <div className="h-2 w-36 rounded bg-slate-200" />
-                          <div className="ml-auto h-7 w-16 rounded bg-indigo-200" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* card “Event Schedule” (tầng trên, lệch phải) */}
-          <div className="absolute -bottom-8 right-2 w-[88%] translate-y-2 rounded-2xl border border-slate-200 bg-white shadow-2xl sm:right-6">
-            <div className="border-b border-slate-100 px-5 py-3">
-              <p className="text-sm font-semibold text-slate-900">Event Schedule</p>
-            </div>
-            <div className="divide-y divide-slate-100">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="flex items-center gap-3 px-5 py-3">
-                  <span className="rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700">
-                    09:00 AM
-                  </span>
-                  <div className="h-2 w-40 rounded bg-slate-200" />
-                  <div className="ml-auto flex -space-x-2">
-                    {[...Array(3)].map((__, j) => (
-                      <span key={j} className="h-6 w-6 rounded-full border border-white bg-slate-200" />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ticket nhỏ nổi phía trước (tầng trên cùng, lệch trái) */}
-          <div className="absolute -left-4 bottom-10 w-[60%] rotate-1 rounded-2xl border border-slate-200 bg-white shadow-xl sm:-left-8">
-            <div className="px-4 py-3">
-              <p className="text-sm font-semibold text-slate-900">Ticket Fair</p>
-              <p className="text-xs text-indigo-600">Gold <span className="text-slate-400">(Seats Available: 50)</span></p>
-              <div className="mt-3 grid grid-cols-3 items-center gap-2">
-                <span className="text-sm font-bold text-slate-900">$20.00</span>
-                <div className="flex items-center justify-center gap-2">
-                  <button className="h-8 w-8 rounded-md border border-slate-200 text-slate-600">−</button>
-                  <div className="h-8 w-8 rounded-md border border-slate-200 bg-slate-50 text-center leading-8">0</div>
-                  <button className="h-8 w-8 rounded-md border border-slate-200 text-slate-600">+</button>
-                </div>
-                <span className="text-right text-sm font-semibold text-slate-900">$0.00</span>
-              </div>
-              <button className="mt-4 w-full rounded-lg bg-indigo-600 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-700">
-                Buy Ticket
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
+      
+      {/* Floating particles effect */}
+      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="w-2 h-2 bg-blue-400 rounded-full animate-float" style={{animationDelay: '0s'}} />
+        <div className="w-1 h-1 bg-cyan-400 rounded-full animate-float mt-2" style={{animationDelay: '0.5s'}} />
+        <div className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-float mt-1" style={{animationDelay: '1s'}} />
+      </div>
+    </div>
   );
 }
 
 
 function PlanCard({ ribbon, gradient, price, unit, features, highlight=false }) {
   return (
-    <div className={`relative rounded-2xl border ${highlight ? 'border-blue-200' : 'border-slate-200'} bg-white shadow-sm h-full flex flex-col hover:shadow-xl hover:scale-105 transition-all duration-300 group`}>
-      <div className="px-6 py-8 flex flex-col flex-1">
+    <div className={`relative rounded-2xl border ${highlight ? 'border-blue-200' : 'border-slate-200'} bg-white shadow-sm h-full flex flex-col hover:shadow-xl hover:scale-105 transition-all duration-500 group hover-lift`}>
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer rounded-2xl" />
+      
+      <div className="px-6 py-8 flex flex-col flex-1 relative z-10">
         <div className="mb-4">
-          <span className="inline-flex px-3 py-1 rounded-md text-xs font-semibold text-white group-hover:scale-110 transition-transform duration-300" style={{background: gradient}}>{ribbon}</span>
+          <span className="inline-flex px-3 py-1 rounded-md text-xs font-semibold text-white transition-all duration-300" style={{background: gradient}}>{ribbon}</span>
         </div>
         <div className="flex items-end gap-2 text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
           <span className="text-5xl font-extrabold tracking-tight group-hover:scale-110 transition-transform duration-300">{price}</span>
@@ -625,17 +641,24 @@ function PlanCard({ ribbon, gradient, price, unit, features, highlight=false }) 
         </p>
         <ul className="mt-5 space-y-3 flex-1">
           {features.map((f, i) => (
-            <li key={i} className="flex items-start gap-3 text-slate-700 text-sm group-hover:text-slate-800 transition-colors duration-300">
-              <CheckCircle2 className="mt-0.5 text-emerald-600 group-hover:text-emerald-700 group-hover:scale-110 transition-all duration-300" size={16}/>
+            <li key={i} className="flex items-start gap-3 text-slate-700 text-sm group-hover:text-slate-800 transition-all duration-300 group-hover:translate-x-1" style={{transitionDelay: `${i * 30}ms`}}>
+              <CheckCircle2 className="mt-0.5 text-emerald-600 group-hover:text-emerald-700 transition-all duration-300" size={16}/>
               <span>{f}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-auto pt-6"> {/* mt-7 -> mt-auto pt-6 để CTA dính đáy */}
+        <div className="mt-auto pt-6">
           <GButton as="button" className="w-full rounded-full justify-center" gradient={highlight ? 'secondary' : 'primary'}>
             MUA NGAY
           </GButton>
         </div>
+      </div>
+      
+      {/* Floating particles */}
+      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="w-2 h-2 bg-blue-400 rounded-full animate-float" style={{animationDelay: '0s'}} />
+        <div className="w-1 h-1 bg-cyan-400 rounded-full animate-float mt-2" style={{animationDelay: '0.5s'}} />
+        <div className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-float mt-1" style={{animationDelay: '1s'}} />
       </div>
     </div>
   );
@@ -647,7 +670,7 @@ function Pricing(){
     {
       ribbon: 'Basic',
       gradient: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
-      price: '800',
+      price: '2.499',
       unit: '000đ',
       features: [
         
@@ -667,7 +690,7 @@ function Pricing(){
     {
       ribbon: 'Advance',
       gradient: 'linear-gradient(135deg, #22D3EE, #3B82F6)',
-      price: '1.299',
+      price: '2.499',
       unit: '000đ',
       features: [
         'Bao gồm toàn bộ Basic',
@@ -704,11 +727,11 @@ function Pricing(){
   
 
   return (
-    <GSection gradient="primary" className="py-16 sm:py-20">
+    <GSection id="pricing" gradient="primary" className="py-16 sm:py-20">
       <div className={`${container}`}>
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white animate-fade-in-up" style={{animationDelay: '0.1s'}}>Bảng giá</h2>
-          <p className="mt-3 text-white/90 animate-fade-in-up" style={{animationDelay: '0.2s'}}>Chọn gói phù hợp với giai đoạn phát triển của trung tâm.</p>
+        <div className="text-center max-w-3xl mx-auto mb-10 animate-fade-in-up">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white animate-scale-in stagger-1">Giá Dịch Vụ</h2>
+          <p className="mt-3 text-white/90 animate-fade-in-up stagger-2">Chọn gói phù hợp với giai đoạn phát triển của trung tâm.</p>
         </div>
 
         {/* Grid 3 cột + nhấn card giữa bằng arbitrary-variants */}
@@ -723,7 +746,7 @@ function Pricing(){
           "
         >
           {plans.map((p, index) => (
-            <div key={p.ribbon} className="h-full animate-fade-in-up" style={{animationDelay: `${0.1 + index * 0.2}s`}}>
+            <div key={p.ribbon} className={`h-full animate-bounce-in stagger-${index + 3}`}>
               <PlanCard {...p} />
             </div>
           ))}
@@ -733,42 +756,19 @@ function Pricing(){
   );
 }
 
-function CTAStrip() {
-  return (
-    <GSection gradient="secondary" id="cta">
-      <div className={`${container} ${section} text-center`}>
-        <h3 className="text-2xl sm:text-3xl font-semibold text-white animate-fade-in-up" style={{animationDelay: '0.1s'}}>Đơn giản hóa quản lý – tập trung tăng trưởng</h3>
-        <p className="mt-3 text-white/90 animate-fade-in-up" style={{animationDelay: '0.2s'}}>Phù hợp cho trung tâm giáo dục mọi quy mô. Không phí ẩn.</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-6 min-w-[220px] animate-fade-in-up hover:scale-105 hover:shadow-lg transition-all duration-300" style={{animationDelay: '0.3s'}}>
-            <p className="text-sm text-slate-600">Hiểu rõ khách hàng</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">CRM</p>
-          </div>
-          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-6 min-w-[220px] animate-fade-in-up hover:scale-105 hover:shadow-lg transition-all duration-300" style={{animationDelay: '0.4s'}}>
-            <p className="text-sm text-slate-600">Tối ưu vận hành</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">Ops</p>
-          </div>
-          <div className="rounded-2xl bg-white ring-1 ring-slate-200 p-6 min-w-[220px] animate-fade-in-up hover:scale-105 hover:shadow-lg transition-all duration-300" style={{animationDelay: '0.5s'}}>
-            <p className="text-sm text-slate-600">KPI đo lường thực tế</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">Analytics</p>
-          </div>
-        </div>
-        <div className="mt-8 animate-fade-in-up" style={{animationDelay: '0.6s'}}>
-          <GButton as="a" className="px-6 py-3 hover:scale-105 transition-transform duration-300" gradient="primary">Bắt đầu ngay <ArrowRight size={18}/></GButton>
-        </div>
-      </div>
-    </GSection>
-  );
-}
+
 
 function TestimonialCard({name, title, quote, avatar, className = "", style = {}}){
   return (
     <div className={`group relative ${className}`} style={style}>
       <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/20 to-indigo-600/20 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-      <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-300 hover:scale-105">
-        <div className="flex items-start gap-4 mb-6">
+      <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-500 hover-lift">
+        {/* Shimmer effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-shimmer rounded-3xl" />
+        
+        <div className="flex items-start gap-4 mb-6 relative z-10">
           <div className="flex-shrink-0">
-            <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+            <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-lg shadow-lg transition-all duration-300">
               {avatar}
             </div>
           </div>
@@ -778,13 +778,20 @@ function TestimonialCard({name, title, quote, avatar, className = "", style = {}
                 <Star key={i} size={16} className="text-yellow-400 fill-current"/>
               ))}
             </div>
-            <p className="font-bold text-slate-900 text-lg">{name}</p>
-            <p className="text-slate-600 font-medium">{title}</p>
+            <p className="font-bold text-slate-900 text-lg group-hover:text-blue-700 transition-colors duration-300">{name}</p>
+            <p className="text-slate-600 font-medium group-hover:text-slate-700 transition-colors duration-300">{title}</p>
           </div>
         </div>
-        <blockquote className="text-slate-700 leading-relaxed text-lg italic">
+        <blockquote className="text-slate-700 leading-relaxed text-lg italic group-hover:text-slate-800 transition-colors duration-300 relative z-10">
           "{quote}"
         </blockquote>
+        
+        {/* Floating particles */}
+        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="w-2 h-2 bg-blue-400 rounded-full animate-float" style={{animationDelay: '0s'}} />
+          <div className="w-1 h-1 bg-cyan-400 rounded-full animate-float mt-2" style={{animationDelay: '0.5s'}} />
+          <div className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-float mt-1" style={{animationDelay: '1s'}} />
+        </div>
       </div>
     </div>
   );
@@ -814,12 +821,12 @@ function Testimonials(){
   return (
     <GSection gradient="primary" id="testimonials">
       <div className={`${container} ${section}`}>
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6">Khách hàng nói gì?</h3>
-          <p className="text-xl text-white/90">Những phản hồi thực tế từ các trung tâm đã triển khai EduCRM</p>
+        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+          <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6 animate-scale-in stagger-1">Khách hàng nói gì?</h3>
+          <p className="text-xl text-white/90 animate-fade-in-up stagger-2">Những phản hồi thực tế từ các trung tâm đã triển khai EduCRM</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map((t, index) => <TestimonialCard key={t.name} {...t} className={`animate-fade-in-up`} style={{animationDelay: `${0.1 + index * 0.2}s`}} />)}
+          {items.map((t, index) => <TestimonialCard key={t.name} {...t} className={`animate-bounce-in stagger-${index + 3}`} />)}
         </div>
       </div>
     </GSection>
@@ -829,27 +836,56 @@ function Testimonials(){
 function FAQ(){
   const [open, setOpen] = useState(0);
   const faqs = [
-    {q:"XinKEdu triển khai thế nào?", a:"Chúng tôi hỗ trợ triển khai nhanh trong 1–3 ngày làm việc cùng hướng dẫn chi tiết."},
-    {q:"Dữ liệu có an toàn không?", a:"Dữ liệu được mã hóa, sao lưu định kỳ và tuân thủ các tiêu chuẩn bảo mật phổ biến."},
-    {q:"Có gói dùng thử không?", a:"Bạn có thể dùng thử miễn phí 14 ngày với đầy đủ tính năng cốt lõi."},
+    {
+      q: "Triển khai & thời gian thực hiện",
+      a: "XinKEdu triển khai theo quy trình chuẩn gồm khảo sát nhanh nhu cầu, cấu hình mẫu (lớp, môn, giáo viên, phân quyền), nhập dữ liệu ban đầu và đào tạo sử dụng. Với gói cloud, thời gian thường 1–3 ngày làm việc. Nếu có tuỳ biến đặc thù hoặc tích hợp hệ thống sẵn có, chúng tôi lên kế hoạch mốc nghiệm thu rõ ràng để bảo đảm tiến độ."
+    },
+    {
+      q: "Bảo mật dữ liệu & tuân thủ",
+      a: "Dữ liệu được mã hoá khi truyền và khi lưu, phân quyền theo vai trò (RBAC), ghi nhật ký truy cập và sao lưu định kỳ. Chúng tôi áp dụng nguyên tắc tối thiểu đặc quyền, kiểm thử định kỳ và cảnh báo bất thường. Hạ tầng tách biệt theo khách hàng; có tuỳ chọn vùng lưu trữ gần Việt Nam. Tài liệu quy trình backup/restore sẵn sàng cung cấp khi kích hoạt."
+    },
+    {
+      q: "Tính năng AI & OCR đề thi",
+      a: "AI hỗ trợ gợi ý nội dung dạy, tạo nhanh ngân hàng câu hỏi theo cấp độ khó, và phân tích buổi dạy để đưa ra điểm nổi bật, việc cần làm. Với OCR, bạn tải ảnh/PDF, hệ thống nhận dạng và chuyển thành câu hỏi có thể chỉnh sửa, giữ được ký hiệu môn tự nhiên. Có thể xuất sang Word/PDF hoặc đưa thẳng vào ngân hàng câu hỏi."
+    },
+    {
+      q: "Tích hợp SSO, API & nhập dữ liệu",
+      a: "Hệ thống hỗ trợ SSO Google/Microsoft, ràng buộc miền email và kết hợp xác thực nội bộ nếu cần. Chúng tôi cung cấp API REST cùng webhook để kết nối CRM/kế toán/LMS. Việc nhập dữ liệu ban đầu dùng CSV/XLSX/Google Sheets với trình ánh xạ trường trực quan, kiểm tra lỗi ngay khi tải lên và hướng dẫn sửa nhanh trước khi ghi nhận."
+    },
+    {
+      q: "Quy mô, hiệu năng & phân quyền",
+      a: "XinKEdu phục vụ từ vài trăm tới hàng chục nghìn học viên. Có đa cơ sở/campus với báo cáo theo từng cơ sở hoặc tổng hợp. Phân quyền chi tiết theo vai trò và phạm vi (khối lớp, cơ sở), hỗ trợ phê duyệt thao tác nhạy cảm. Kiến trúc linh hoạt giúp mở rộng tài nguyên theo nhu cầu thực tế mà không gián đoạn hoạt động giảng dạy."
+    },
+    {
+      q: "Dùng thử, giá & hoá đơn",
+      a: "Bạn được dùng thử 14 ngày với các tính năng cốt lõi. Khi nâng cấp, toàn bộ dữ liệu dùng thử được giữ nguyên. Chúng tôi hỗ trợ thanh toán theo tháng/năm, có ưu đãi cho thanh toán dài hạn và tổ chức giáo dục phi lợi nhuận. Xuất hoá đơn VAT đầy đủ; mọi chi phí tuỳ biến (nếu có) được bóc tách minh bạch theo hạng mục."
+    },
+    {
+      q: "Hỗ trợ kỹ thuật, SLA & dữ liệu sau dùng thử",
+      a: "Hỗ trợ qua email/chat trong giờ làm việc; gói Pro/Enterprise có kênh ưu tiên với SLA phản hồi/khắc phục rõ ràng. Chúng tôi cung cấp tài liệu, video hướng dẫn và đào tạo định kỳ khi có cập nhật lớn. Sau dùng thử, dữ liệu được giữ 30 ngày để bạn nâng cấp hoặc xuất ra; quá thời hạn, hệ thống xoá an toàn theo quy trình chuẩn."
+    }
   ];
+  
+  
   return (
     <section id="faq" className="bg-white">
       <div className={`${container} ${section}`}>
-        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center">Câu hỏi thường gặp</h3>
-        <div className="mt-8 max-w-3xl mx-auto divide-y divide-slate-200 rounded-2xl bg-white ring-1 ring-slate-200">
+        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center animate-fade-in-up animate-scale-in stagger-1">Câu hỏi thường gặp</h3>
+        <div className="mt-8 max-w-3xl mx-auto divide-y divide-slate-200 rounded-2xl bg-white ring-1 ring-slate-200 animate-fade-in-up stagger-2">
           {faqs.map((f, i) => (
             <button
               key={i}
-              className="w-full text-left px-6 py-5 hover:bg-slate-50"
+              className={`w-full text-left px-6 py-5 hover:bg-slate-50 transition-all duration-300 group animate-slide-up-stagger stagger-${i + 3}`}
               onClick={() => setOpen(open === i ? -1 : i)}
             >
               <div className="flex items-center justify-between">
-                <p className="font-medium text-slate-900">{f.q}</p>
-                <span className="text-blue-600 font-semibold">{open === i ? "–" : "+"}</span>
+                <p className="font-medium text-slate-900 group-hover:text-blue-700 transition-colors duration-300">{f.q}</p>
+                <span className={`text-blue-600 font-semibold transition-all duration-300 group-hover:scale-110 ${open === i ? "rotate-180" : ""}`}>
+                  {open === i ? "–" : "+"}
+                </span>
               </div>
               {open === i && (
-                <p className="mt-2 text-slate-600">{f.a}</p>
+                <p className="mt-2 text-slate-600 animate-fade-in-up">{f.a}</p>
               )}
             </button>
           ))}
@@ -859,146 +895,241 @@ function FAQ(){
   );
 }
 
-function Contact(){
+function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong vòng 24h.');
+    console.log("Form submitted:", formData);
+    alert("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong vòng 24h.");
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
     <GSection gradient="secondary" id="contact">
       <div className={`${container} ${section}`}>
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+          {/* LEFT: Copy + Contact cards */}
+          <div className="space-y-8 animate-fade-in-up">
             <div>
-              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-6">Chúng tôi luôn sẵn sàng hỗ trợ</h3>
-              <p className="text-xl text-white/90 leading-relaxed">Điền thông tin để nhận tư vấn và demo theo nhu cầu của bạn. Cam kết phản hồi trong 24h.</p>
+              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 animate-scale-in stagger-1">
+                Chúng tôi luôn sẵn sàng hỗ trợ
+              </h3>
+              <p className="text-lg sm:text-xl text-white/85 leading-relaxed animate-fade-in-up stagger-2">
+                Điền thông tin để nhận tư vấn & demo theo nhu cầu. <b>Phản hồi
+                trong 24h.</b>
+              </p>
             </div>
 
-            
+            {/* Cards */}
+            <div className="space-y-5 md:space-y-6">
+              {/* HOTLINE */}
+              <div
+                className="relative group flex items-center gap-4 p-4 md:p-5 rounded-2xl
+                           bg-white/35 border border-white/50 backdrop-blur
+                           shadow-lg transition-all duration-300 hover-lift
+                           animate-slide-up-stagger stagger-3"
+              >
+                <div
+                  className="relative size-11 grid place-items-center rounded-xl
+                             bg-white/70 text-sky-600 shadow-inner"
+                  aria-hidden="true"
+                >
+                  {/* ping */}
+                  <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-400">
+                    <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
+                  </span>
+                  <Phone size={24} />
+                </div>
 
-<div className="space-y-6">
-  {/* HOTLINE */}
-  <div className="group flex items-center gap-4 p-4 rounded-2xl bg-white/20 border border-white/30 backdrop-blur
-                  transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:bg-white/30">
-    <div className="relative p-3 rounded-xl bg-white/30 text-white
-                    transition-transform duration-300 group-hover:scale-110">
-      {/* ping chấm trạng thái */}
-      <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-400">
-        <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
-      </span>
-      <Phone size={20} className="relative" />
-    </div>
-    <div className="transition-colors duration-300">
-      <p className="font-semibold text-white">Hotline</p>
-      <p className="text-white/90 font-medium">086.270.6996</p>
-    </div>
-    {/* glow viền khi hover */}
-    <span className="pointer-events-none absolute inset-0 rounded-2xl ring-0 ring-white/0
-                     group-hover:ring-2 group-hover:ring-white/40 transition-all duration-300" />
-  </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-white">Hotline</p>
+                    <span
+                      className="text-[11px] px-2 py-0.5 rounded-full
+                                 bg-emerald-400/20 text-emerald-50 border border-emerald-300/40"
+                    >
+                      Trực 24/7
+                    </span>
+                  </div>
+                  <a
+                    href="tel:0862706996"
+                    className="text-white/85 font-medium hover:text-white transition-colors"
+                  >
+                    086.270.6996
+                  </a>
+                </div>
 
-  {/* EMAIL */}
-  <div className="group flex items-center gap-4 p-4 rounded-2xl bg-white/20 border border-white/30 backdrop-blur
-                  transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:bg-white/30">
-    <div className="relative p-3 rounded-xl bg-white/30 text-white
-                    transition-transform duration-300 group-hover:scale-110">
-      <Mail size={20} className="relative motion-safe:animate-pulse" />
-    </div>
-    <div className="transition-colors duration-300">
-      <p className="font-semibold text-white">Email</p>
-      <p className="text-white/90 font-medium">edu@xinkgroup.com</p>
-    </div>
-    <span className="pointer-events-none absolute inset-0 rounded-2xl ring-0 ring-white/0
-                     group-hover:ring-2 group-hover:ring-white/40 transition-all duration-300" />
-  </div>
+                {/* glow */}
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-2xl
+                             ring-0 ring-white/0 group-hover:ring-2 group-hover:ring-white/40
+                             transition-all duration-300"
+                />
+              </div>
 
-  {/* ĐỊA CHỈ */}
-  <div className="group flex items-center gap-4 p-4 rounded-2xl bg-white/20 border border-white/30 backdrop-blur
-                  transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:bg-white/30">
-    <div className="relative p-3 rounded-xl bg-white/30 text-white
-                    transition-transform duration-300 group-hover:scale-110">
-      <MapPin size={20} className="relative" />
-    </div>
-    <div className="transition-colors duration-300">
-      <p className="font-semibold text-white">Địa chỉ</p>
-      <p className="text-white/90 font-medium">Đà Nẵng, Việt Nam</p>
-    </div>
-    <span className="pointer-events-none absolute inset-0 rounded-2xl ring-0 ring-white/0
-                     group-hover:ring-2 group-hover:ring-white/40 transition-all duration-300" />
-  </div>
-</div>
+              {/* EMAIL */}
+              <div
+                className="relative group flex items-center gap-4 p-4 md:p-5 rounded-2xl
+                           bg-white/35 border border-white/50 backdrop-blur
+                           shadow-lg transition-all duration-300 hover-lift
+                           animate-slide-up-stagger stagger-4"
+              >
+                <div
+                  className="relative size-11 grid place-items-center rounded-xl
+                             bg-white/70 text-sky-600 shadow-inner"
+                  aria-hidden="true"
+                >
+                  <Mail size={24} />
+                </div>
 
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-white">Email</p>
+                  <a
+                    href="mailto:edu@xinkgroup.com"
+                    className="text-white/85 font-medium hover:text-white break-words transition-colors"
+                  >
+                    edu@xinkgroup.com
+                  </a>
+                </div>
+
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-2xl
+                             ring-0 ring-white/0 group-hover:ring-2 group-hover:ring-white/40
+                             transition-all duration-300"
+                />
+              </div>
+
+              {/* ADDRESS */}
+              <div
+                className="relative group flex items-center gap-4 p-4 md:p-5 rounded-2xl
+                           bg-white/35 border border-white/50 backdrop-blur
+                           shadow-lg transition-all duration-300 hover-lift
+                           animate-slide-up-stagger stagger-5"
+              >
+                <div
+                  className="relative size-11 grid place-items-center rounded-xl
+                             bg-white/70 text-sky-600 shadow-inner"
+                  aria-hidden="true"
+                >
+                  <MapPin size={24} />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-white">Địa chỉ</p>
+                  <p className="text-white/85 font-medium leading-relaxed">
+                    Tầng 4, Tòa ICT1, Khu Công viên phần mềm số 2 đường Như
+                    Nguyệt, Phường Hải Châu, Thành phố Đà Nẵng
+                  </p>
+                </div>
+
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-2xl
+                             ring-0 ring-white/0 group-hover:ring-2 group-hover:ring-white/40
+                             transition-all duration-300"
+                />
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="rounded-3xl p-8 shadow-xl ring-1 ring-slate-200 bg-white">
-              <h4 className="text-2xl font-bold text-slate-900 mb-6">Gửi yêu cầu tư vấn</h4>
+          {/* RIGHT: Form */}
+          <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in-up stagger-6">
+            <div className="rounded-2xl p-8 shadow-xl shadow-blue-600/10 ring-1 ring-slate-200 bg-white">
+              <h4 className="text-2xl font-bold text-slate-900 mb-6">
+                Gửi yêu cầu tư vấn
+              </h4>
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Họ và tên *</label>
+                  <label
+                    htmlFor="contact-name"
+                    className="block text-sm font-semibold text-slate-700 mb-2"
+                  >
+                    Họ và tên <span className="text-rose-500">*</span>
+                  </label>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    autoComplete="name"
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-slate-900 placeholder-slate-400"
+                    className="w-full h-11 px-4 rounded-xl border border-slate-200
+                               bg-white/90 text-slate-900 placeholder:text-slate-400
+                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
+                               outline-none transition-all"
                     placeholder="Nguyễn Văn A"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                  <label
+                    htmlFor="contact-email"
+                    className="block text-sm font-semibold text-slate-700 mb-2"
+                  >
+                    Email <span className="text-rose-500">*</span>
+                  </label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    autoComplete="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-slate-900 placeholder-slate-400"
+                    className="w-full h-11 px-4 rounded-xl border border-slate-200
+                               bg-white/90 text-slate-900 placeholder:text-slate-400
+                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
+                               outline-none transition-all"
                     placeholder="ban@congty.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Nhu cầu của bạn *</label>
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-sm font-semibold text-slate-700 mb-2"
+                  >
+                    Nhu cầu của bạn <span className="text-rose-500">*</span>
+                  </label>
                   <textarea
+                    id="contact-message"
                     rows={4}
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all duration-200 text-slate-900 placeholder-slate-400 resize-none"
-                    placeholder="Mô tả ngắn về trung tâm & nhu cầu triển khai"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200
+                               bg-white/90 text-slate-900 placeholder:text-slate-400
+                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
+                               outline-none transition-all resize-none"
+                    placeholder="Mô tả ngắn (số lớp, tính năng cần, thời gian dự kiến...)"
                   />
                 </div>
               </div>
 
               <GButton
-  as="button"
-  type="submit"
-  className="w-full mt-8 text-lg py-4 font-bold flex items-center justify-center"
->
-  <MessageCircle size={20} className="mr-2" />
-  Gửi yêu cầu tư vấn
-</GButton>
-
+                as="button"
+                type="submit"
+                gradient="secondary"
+                className="w-full mt-8 h-12 text-base font-semibold
+                           justify-center ring-1 ring-white/20 hover:ring-white/30
+                           focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-white"
+              >
+                <MessageCircle size={20} className="mr-2" />
+                Gửi yêu cầu tư vấn
+              </GButton>
 
               <p className="text-center text-sm text-slate-500 mt-4">
                 Chúng tôi cam kết bảo mật thông tin của bạn.
@@ -1010,6 +1141,7 @@ function Contact(){
     </GSection>
   );
 }
+
 
 function Footer(){
   return (
@@ -1045,7 +1177,7 @@ function Footer(){
             <h4 className="font-bold text-white mb-6">Sản phẩm</h4>
             <ul className="space-y-3 text-slate-400">
               <li><a href="#features" className="hover:text-white transition-colors">Tính năng</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">Lợi ích</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors">Giá dịch vụ</a></li>
               <li><a href="#testimonials" className="hover:text-white transition-colors">Đánh giá</a></li>
               <li><a href="#demo" className="hover:text-white transition-colors">Demo</a></li>
             </ul>
@@ -1105,12 +1237,9 @@ export default function EduCRMLanding(){
       <Hero onOpenLogin={onOpenLogin}/>
 
       <Metrics/>
-      {/* Section bố cục trái–phải (event-style) */}
-      
-      <ProductOverview/>
       <Features/>
       <Pricing/>
-      <CTAStrip/>
+     
       <Testimonials/>
       <FAQ/>
       <Contact/>
@@ -1157,7 +1286,7 @@ export default function EduCRMLanding(){
                   </div>
                 </div>
                 <GButton as="button" type="submit" className="w-full justify-center">Đăng nhập</GButton>
-                <p className="text-center text-sm text-slate-500">Chưa có tài khoản? <a href="#" className="text-blue-600 hover:underline">Đăng ký</a></p>
+                <p className="text-center text-sm text-slate-500">Chưa có tài khoản? <a href="#contact" className="text-blue-600 hover:underline" onClick={() => setLoginOpen(false)}>Đăng ký</a></p>
               </form>
             </div>
           </div>
