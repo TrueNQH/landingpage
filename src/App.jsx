@@ -323,9 +323,9 @@ function Features() {
         {/* 1/ Trung tâm xếp lịch dạy cho giáo viên */}
         <FeatureRow
           title="Xếp lịch dạy cho giáo viên"
-          desc="Kéo–thả lịch dạy trực quan, tránh trùng ca và tự động nhắc lịch qua Zalo/Email."
+          desc="Sắp xếp ca dạy trực quan, tránh trùng ca và tự động nhắc lịch qua Zalo/Email."
           bullets={[
-            "Lịch tuần/tháng, kéo–thả ca dạy",
+            "Lịch tuần/tháng, sắp xếp ca dạy",
             "Cảnh báo trùng phòng/giờ/giáo viên",
             "Tự động nhắc lịch & đổi ca nhanh",
           ]}
@@ -339,7 +339,7 @@ function Features() {
           title="Tạo đề thi bằng AI (nhanh & thông minh)"
           desc="Sinh đề tự động theo chủ đề, độ khó, chuẩn đầu ra. Hỗ trợ nhiều loại câu hỏi và chấm điểm tự động."
           bullets={[
-            "Sinh câu hỏi: Trắc nghiệm, Đ/S, Điền khuyết, Tự luận",
+            "Sinh câu hỏi: Trắc nghiệm, Đúng/Sai, Điền khuyết, Tự luận",
             "Điều chỉnh độ khó, mục tiêu kỹ năng",
             "Chấm điểm tự động + nhận xét AI",
           ]}
@@ -364,11 +364,11 @@ function Features() {
         <FeatureRow
           reverse
           title="Check-in / Check-out dạy học"
-          desc="Điểm danh ca dạy bằng một chạm: GPS + ảnh minh chứng + ghi chú tức thời."
+          desc="Điểm danh ca dạy bằng một chạm: GPS + ghi chú tức thời."
           bullets={[
             "Check-in theo vị trí & thời gian",
-            "Ảnh xác thực, ghi chú ca dạy",
-            "Tổng hợp bảng công & KPI",
+            "Xác thực, ghi chú ca dạy",
+            "Tổng hợp bảng công & phục vụ tính lương",
           ]}
           img="checkin.png"
           icon={<Shield size={28} />}
@@ -379,8 +379,8 @@ function Features() {
           title="AI trợ giảng Live & phân tích buổi dạy"
           desc="Theo dõi thời gian thực, gợi ý tương tác, đánh dấu highlight & xuất báo cáo lớp học."
           bullets={[
-            "Gợi ý nội dung/quiz ngay trong giờ",
-            "Theo dõi tương tác & mức độ hiểu",
+            "Hỏi AI những kiến thức mới có trong buổi học",
+            "Lấy ý kiến phản hồi từ học sinh",
             "Báo cáo sau buổi: highlight, to-do",
           ]}
           img="meeting.png"
@@ -393,11 +393,11 @@ function Features() {
           title="Thi & xem điểm online"
           desc="Học sinh làm bài trên web/mobile, chống gian lận nhẹ, xem điểm & lời giải ngay sau khi nộp."
           bullets={[
-            "Phòng thi online theo lịch",
-            "Giám sát camera/mic nhẹ nhàng",
+            "Phòng thi online theo lịch",           
             "Xem điểm, đáp án & lời giải",
+            "Ôn tập, tổng hợp kiến thức",
           ]}
-          img="student_exam.png"
+          img="exam.jpg"
           icon={<CheckCircle2 size={28} />}
         />
 
@@ -445,6 +445,133 @@ function Features() {
           </div>
         </div>
         {/* --- End: Tính năng Đặc biệt --- */}
+      </div>
+    </section>
+  );
+}
+function FeatureEvent({
+  title = "Create the Real Event & Event Details",
+  desc = "Quicklearn allows you to create genuine Events and Event Details whenever and how you want. It also includes:",
+  bullets = ["Flexible Event Create", "Anytime Event Open & Close"],
+  mainImg, // ảnh nền chính (UI lớn bên phải) — ví dụ: '/img/event-main.png'
+  gridImg, // ảnh danh sách nhỏ — ví dụ: '/img/event-grid.png'
+}) {
+  return (
+    <section className="relative mx-auto max-w-6xl px-4 py-16 sm:py-24">
+      {/* trang trí nền */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute right-24 top-24 h-24 w-24 rounded-full border-2 border-violet-100/60" />
+        <div className="absolute right-12 top-56 grid h-16 w-16 grid-cols-4 gap-1 opacity-40">
+          {Array.from({ length: 16 }).map((_, i) => (
+            <span key={i} className="rounded-sm border border-fuchsia-200/60" />
+          ))}
+        </div>
+        <svg className="absolute left-1/2 top-2/3 -translate-x-1/2 opacity-30" width="160" height="40" viewBox="0 0 160 40" fill="none">
+          <path d="M2 30c12-22 28-22 40 0s28 22 40 0 28-22 40 0 28 22 36 0" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" />
+        </svg>
+      </div>
+
+      <div className="grid items-center gap-10 lg:grid-cols-2">
+        {/* LEFT: text */}
+        <div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            {title}
+          </h2>
+          <p className="mt-4 text-slate-600">{desc}</p>
+
+          <ul className="mt-6 space-y-3">
+            {bullets.map((b, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600">
+                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-white">
+                    <path fill="currentColor" d="M9.5 16.2 5.8 12.5l1.4-1.4 2.3 2.3 6.4-6.4 1.4 1.4z" />
+                  </svg>
+                </span>
+                <span className="font-medium">{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* RIGHT: stacked mockups */}
+        <div className="relative mx-auto w-full max-w-xl">
+          {/* card nền lớn */}
+          <div className="relative rounded-2xl border border-slate-200 bg-white/90 shadow-xl backdrop-blur-sm">
+            <div className="p-4 sm:p-6">
+              {/* nếu có ảnh thật */}
+              {mainImg ? (
+                <img
+                  src={mainImg}
+                  alt="Event UI"
+                  className="h-64 w-full rounded-xl object-cover sm:h-72"
+                />
+              ) : (
+                // mock UI
+                <div className="h-64 w-full rounded-xl bg-gradient-to-br from-slate-50 to-violet-50 sm:h-72">
+                  <div className="grid h-full grid-cols-12 gap-3 p-4">
+                    <div className="col-span-4 space-y-3">
+                      <div className="h-8 rounded-md bg-slate-200/80" />
+                      <div className="h-8 rounded-md bg-slate-200/60" />
+                      <div className="h-8 rounded-md bg-slate-200/40" />
+                      <div className="h-8 rounded-md bg-slate-200/30" />
+                    </div>
+                    <div className="col-span-8 space-y-3">
+                      {[...Array(4)].map((_, i) => (
+                        <div key={i} className="flex items-center gap-3 rounded-lg bg-white p-3 shadow">
+                          <div className="h-10 w-20 rounded bg-indigo-100" />
+                          <div className="h-2 w-36 rounded bg-slate-200" />
+                          <div className="ml-auto h-7 w-16 rounded bg-indigo-200" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* card “Event Schedule” (tầng trên, lệch phải) */}
+          <div className="absolute -bottom-8 right-2 w-[88%] translate-y-2 rounded-2xl border border-slate-200 bg-white shadow-2xl sm:right-6">
+            <div className="border-b border-slate-100 px-5 py-3">
+              <p className="text-sm font-semibold text-slate-900">Event Schedule</p>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="flex items-center gap-3 px-5 py-3">
+                  <span className="rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700">
+                    09:00 AM
+                  </span>
+                  <div className="h-2 w-40 rounded bg-slate-200" />
+                  <div className="ml-auto flex -space-x-2">
+                    {[...Array(3)].map((__, j) => (
+                      <span key={j} className="h-6 w-6 rounded-full border border-white bg-slate-200" />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ticket nhỏ nổi phía trước (tầng trên cùng, lệch trái) */}
+          <div className="absolute -left-4 bottom-10 w-[60%] rotate-1 rounded-2xl border border-slate-200 bg-white shadow-xl sm:-left-8">
+            <div className="px-4 py-3">
+              <p className="text-sm font-semibold text-slate-900">Ticket Fair</p>
+              <p className="text-xs text-indigo-600">Gold <span className="text-slate-400">(Seats Available: 50)</span></p>
+              <div className="mt-3 grid grid-cols-3 items-center gap-2">
+                <span className="text-sm font-bold text-slate-900">$20.00</span>
+                <div className="flex items-center justify-center gap-2">
+                  <button className="h-8 w-8 rounded-md border border-slate-200 text-slate-600">−</button>
+                  <div className="h-8 w-8 rounded-md border border-slate-200 bg-slate-50 text-center leading-8">0</div>
+                  <button className="h-8 w-8 rounded-md border border-slate-200 text-slate-600">+</button>
+                </div>
+                <span className="text-right text-sm font-semibold text-slate-900">$0.00</span>
+              </div>
+              <button className="mt-4 w-full rounded-lg bg-indigo-600 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-700">
+                Buy Ticket
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
