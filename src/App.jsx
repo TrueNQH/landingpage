@@ -62,73 +62,87 @@ function Navbar({ onOpenLogin }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 border-b border-slate-200/60 shadow-sm">
-      <div className={`${container} h-18 flex items-center justify-between`}>
-        <div className="flex items-center gap-3">
-          <div className="size-12 flex justify-center items-center">
-            <img style={{maxWidth: "130%"}} src="logo.png" alt="logo" />
-          </div>
-        </div>
-
-        {/* Tăng font nav: md:15px, lg:16px, xl:18px */}
-        <nav className="hidden md:flex items-center gap-8 text-[15px] lg:text-base xl:text-lg text-slate-700">
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#features">Tính năng</a>
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#pricing">Giá dịch vụ</a>
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#testimonials">Đánh giá</a>
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#faq">FAQ</a>
-          <a className="hover:text-blue-700 transition-colors duration-200 font-medium" href="#contact">Liên hệ</a>
-        </nav>
-
-        <div className="flex items-center gap-3">
-          {/* Tăng text-sm -> text-base, icon 16 -> 18 */}
-          <a
-            href="#contact"
-            className="hidden sm:inline-flex items-center gap-2 border border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 rounded-xl px-4 py-2 text-base font-medium transition-all duration-200"
-          >
-            <MessageCircle size={18} />
-            Liên hệ
-          </a>
-
-          {/* Tăng icon 16 -> 18, chữ theo mặc định của GButton; thêm text-base để đảm bảo lớn hơn */}
-          <GButton
-            as="a"
-            href="#demo"
-            onClick={(e) => { e.preventDefault(); onOpenLogin && onOpenLogin(); }}
-            gradient="secondary"
-            className="px-5 py-2.5 text-base"
-          >
-            <Zap size={18} />
-            Dùng thử
-          </GButton>
-
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200 shadow-lg">
-          <div className="px-4 py-4 space-y-3">
-            {/* Tăng text-base cho mobile */}
-            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#features" onClick={() => setMobileMenuOpen(false)}>Tính năng</a>
-            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#pricing" onClick={() => setMobileMenuOpen(false)}>Giá dịch vụ</a>
-            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Đánh giá</a>
-            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-            <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#contact" onClick={() => setMobileMenuOpen(false)}>Liên hệ</a>
-            <div className="pt-3 border-t border-slate-200">
-              <GButton as="a" href="#demo" className="block w-full justify-center text-base py-3">Dùng thử miễn phí</GButton>
+   <div style={{marginTop: "20px"}} className="fixed top-0 inset-x-0 z-50">
+   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className={[
+            "flex items-center justify-evenly",
+            "h-16 sm:h-18 px-3 sm:px-4",
+            "bg-white/100 backdrop-blur-md supports-[backdrop-filter]:bg-white/80",
+            "border border-slate-200/60 shadow-sm",
+            "transition-all duration-100",
+            "rounded-2xl", // bo tròn khi đóng menu
+            mobileMenuOpen ? "rounded-b-none" : "",
+          ].join(" ")}
+        >
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <div className="size-12 flex justify-center items-center">
+              <img style={{ maxWidth: "150%" }} src="logo.png" alt="logo" />
             </div>
           </div>
+
+          {/* Nav desktop */}
+          <nav className="hidden md:flex items-center gap-8 text-[15px] lg:text-base xl:text-lg text-slate-700">
+            <a className="hover:text-blue-700 transition-colors font-medium" href="#features">Tính năng</a>
+            <a className="hover:text-blue-700 transition-colors font-medium" href="#pricing">Giá dịch vụ</a>
+            <a className="hover:text-blue-700 transition-colors font-medium" href="#testimonials">Đánh giá</a>
+            <a className="hover:text-blue-700 transition-colors font-medium" href="#faq">FAQ</a>
+            <a className="hover:text-blue-700 transition-colors font-medium" href="#contact">Liên hệ</a>
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#contact"
+              className="hidden sm:inline-flex items-center gap-2 border border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300 rounded-xl px-4 py-2 text-base font-medium transition-all"
+            >
+              <MessageCircle size={18} />
+              Liên hệ
+            </a>
+
+            <GButton
+              as="a"
+              href="#demo"
+              onClick={(e) => { e.preventDefault(); onOpenLogin && onOpenLogin(); }}
+              gradient="secondary"
+              className="px-5 py-2.5 text-base"
+            >
+              <Zap size={18} />
+              Dùng thử
+            </GButton>
+
+            <button
+              className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Menu (nằm cùng khối, bo tròn đáy) */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-x border-b border-slate-200 shadow-lg rounded-b-2xl overflow-hidden">
+            <div className="px-4 py-4 space-y-3">
+              <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#features" onClick={() => setMobileMenuOpen(false)}>Tính năng</a>
+              <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#pricing" onClick={() => setMobileMenuOpen(false)}>Giá dịch vụ</a>
+              <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Đánh giá</a>
+              <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+              <a className="block py-2 text-base text-slate-700 hover:text-blue-700 font-medium transition-colors" href="#contact" onClick={() => setMobileMenuOpen(false)}>Liên hệ</a>
+              <div className="pt-3 border-t border-slate-200">
+                <GButton as="a" href="#demo" className="block w-full justify-center text-base py-3">
+                  Dùng thử miễn phí
+                </GButton>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+   </div>
   );
 }
+
 
 
 function Hero({ onOpenLogin }) {
@@ -138,14 +152,14 @@ function Hero({ onOpenLogin }) {
   className={`
     ${container} ${section}
     pt-10 md:pt-24 pb-10 md:pb-12
-    md:min-h-[calc(100dvh-64px)]
-    supports-[height:100svh]:md:min-h-[calc(100svh-64px)]
-    lg:h-[calc(100dvh-64px)]
-    supports-[height:100svh]:lg:h-[calc(100svh-64px)]
+    md:min-h-[100dvh]
+    supports-[height:100svh]:md:min-h-[100svh]
+    lg:h-[100dvh]
+    supports-[height:100svh]:lg:h-[100svh]
   `}
 >
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mt-[80px]">
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="animate-fade-in-up" style={{animationDelay: '0.1s'}}>
@@ -619,7 +633,12 @@ function FeatureCard({ icon, title, desc, bullets, index = 0 }) {
 }
 
 
-function PlanCard({ ribbon, gradient, price, unit, features, highlight=false }) {
+function PlanCard({ ribbon, gradient, price, unit, features, note, highlight=false }) {
+  const [showAll, setShowAll] = useState(false);
+  const VISIBLE_LIMIT = 8;
+  const hasMore = Array.isArray(features) && features.length > VISIBLE_LIMIT;
+  const visibleFeatures = showAll ? features : (features || []).slice(0, VISIBLE_LIMIT);
+
   return (
     <div className={`relative rounded-2xl border ${highlight ? 'border-blue-200' : 'border-slate-200'} bg-white shadow-sm h-full flex flex-col hover:shadow-xl hover:scale-105 transition-all duration-500 group hover-lift`}>
       {/* Shimmer effect */}
@@ -637,16 +656,26 @@ function PlanCard({ ribbon, gradient, price, unit, features, highlight=false }) 
           </div>
         </div>
         <p className="mt-5 text-sm text-slate-600 group-hover:text-slate-700 transition-colors duration-300">
-          Gói tính năng phù hợp cho nhu cầu.
+          {note || "Gói tính năng phù hợp cho nhu cầu."}
         </p>
-        <ul className="mt-5 space-y-3 flex-1">
-          {features.map((f, i) => (
-            <li key={i} className="flex items-start gap-3 text-slate-700 text-sm group-hover:text-slate-800 transition-all duration-300 group-hover:translate-x-1" style={{transitionDelay: `${i * 30}ms`}}>
-              <CheckCircle2 className="mt-0.5 text-emerald-600 group-hover:text-emerald-700 transition-all duration-300" size={16}/>
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-5 relative flex-1">
+          <ul className="space-y-3">
+            {visibleFeatures.map((f, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700 text-sm group-hover:text-slate-800 transition-all duration-300 group-hover:translate-x-1" style={{transitionDelay: `${i * 30}ms`}}>
+                <CheckCircle2 className="mt-0.5 text-emerald-600 group-hover:text-emerald-700 transition-all duration-300" size={16}/>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          {!showAll && hasMore && (
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
+          )}
+        </div>
+        {hasMore && (
+          <button onClick={() => setShowAll(!showAll)} className="mt-4 text-xs font-semibold text-blue-700 hover:text-blue-800 inline-flex items-center">
+            {showAll ? "Thu gọn" : "Xem thêm"}
+          </button>
+        )}
         <div className="mt-auto pt-6">
           <GButton as="button" className="w-full rounded-full justify-center" gradient={highlight ? 'secondary' : 'primary'}>
             MUA NGAY
@@ -668,62 +697,96 @@ function PlanCard({ ribbon, gradient, price, unit, features, highlight=false }) 
 function Pricing(){
   const plans = [
     {
-      ribbon: 'Basic',
-      gradient: 'linear-gradient(135deg, #3B82F6, #06B6D4)',
-      price: '2.499',
-      unit: '000đ',
+      ribbon: "Dùng Thử Miễn Phí",
+      gradient: "linear-gradient(135deg, #3B82F6, #06B6D4)",
+      price: "Free",
+      unit: "",
+      note: "Đầy đủ tính năng nhưng giới hạn tài nguyên (dung lượng, số lần AI/ngày, băng thông).",
       features: [
-        
-        'Upload Tài Liệu < 10mb',
-        'Phân tích tài liệu bằng AI',
-        'Overview tài liệu',
-        'Tạo đề thi AI từ tài liệu',
-        'Đa dạng loại câu hỏi',
-        'Xem, Publish / Unpublish đề thi',
-        'Chọn bài kiểm tra, xem điểm & đáp án',
-        'Ghi nhận buổi dạy',
-        'Quản lý lớp học, giáo viên, học sinh',
-        'Lên lịch dạy cho giáo viên',
-       
-      ]
-    },
-    {
-      ribbon: 'Advance',
-      gradient: 'linear-gradient(135deg, #22D3EE, #3B82F6)',
-      price: '2.499',
-      unit: '000đ',
-      features: [
-        'Bao gồm toàn bộ Basic',
-        'Live Teach (giảng dạy thời gian thực)',
-        'AI Analysis nâng cao',
-        'Tải tài liệu lớn > 10MB',
-        'Chỉnh sửa câu hỏi đã sinh',
-        'Tự tạo đề ôn tập theo chương/bài',
-        'Nâng cấp chấm điểm & phản hồi',
-        'Quản trị đề thi linh hoạt (ngân hàng câu hỏi)',
-        'Theo dõi tiến độ học theo lớp/nhóm'
-      ]
-    },
-    {
-      ribbon: 'Premium',
-      gradient: 'linear-gradient(135deg, #A855F7, #3B82F6)',
-      price: '2.499',
-      unit: '000đ',
-      features: [
-        'Bao gồm toàn bộ Advance',
-        'Quản lý hồ sơ nhân viên',
-        'Chấm công & tính lương',
-        'Báo cáo hiệu suất (KPI)',
-        'Quản lý thông tin tài chính',
-        'Dự báo tài chính',
-        'Chatbot tư vấn',
-        'Phân quyền chi tiết & nhật ký hoạt động',
-        'Hỗ trợ ưu tiên'
+        // Upload & AI đề thi
+        "AI Phân tích tài liệu bài giảng",
+        "AI Tạo đề thi từ tài liệu",
+        "AI Tạo đề thi từ ảnh chụp (OCR)",
+        "AI phân tích buổi dạy",
+        "AI đánh giá performance học sinh trong buổi học",
+        "Chỉnh sửa được câu hỏi",
+        "Publish / Unpublish đề thi",
+        "Live Teach (giảng dạy thời gian thực)",
+        // Dạy & phân tích buổi dạy
+        "Xem lịch dạy học",
+        "Check-in buổi dạy",      
+        // Kiểm tra – đánh giá
+        "Chọn bài thi và làm kiểm tra",
+        "Xem điểm và đáp án",
+        "Tự tạo đề ôn tập dựa theo dạng đề vừa làm",
+        "Xem tài liệu mà giáo viên publish trong buổi học",
+        // Quản lý
+        "Lên lịch dạy cho giáo viên",
+        "Ghi nhận buổi dạy cho giáo viên",
+        "Quản lý giáo viên",
+        "Quản lý học trò",
+        "Quản lý lớp học",
+        "Quản lý hồ sơ nhân viên",
+
       ],
-      
     },
-    
+  
+    {
+      ribbon: "Basic",
+      gradient: "linear-gradient(135deg, #3B82F6, #06B6D4)",
+      price: "300",
+      unit: "000đ",
+      note: "Bộ tính năng nền tảng cho trung tâm nhỏ.",
+      features: [
+        "Xử lý upload PDF/TXT < 10MB",
+        "AI Phân tích tài liệu bài giảng",
+        "AI Tạo đề thi từ tài liệu",
+        "Đa dạng loại câu hỏi",
+        "Publish / Unpublish đề thi",
+        "Chọn bài thi và làm kiểm tra",
+        "Xem điểm và đáp án",
+        "Lên lịch dạy cho giáo viên",
+        "Ghi nhận buổi dạy",
+      ],
+    },
+  
+    {
+      ribbon: "Advance",
+      gradient: "linear-gradient(135deg, #22D3EE, #3B82F6)",
+      price: "3.000",
+      unit: "000đ",
+      note: "Mở rộng cho vận hành lớp học chủ động.",
+      features: [
+        "Bao gồm phần lớn Basic",
+        "Chỉnh sửa được câu hỏi",
+        "Check-in buổi dạy",
+        "AI Tạo đề thi từ ảnh chụp (OCR)",
+        "Live Teach (giảng dạy thời gian thực)",
+        "AI phân tích buổi dạy",
+        "Quản lý giáo viên / học trò / lớp học",
+      ],
+    },
+  
+    {
+      ribbon: "Pro",
+      gradient: "linear-gradient(135deg, #A855F7, #3B82F6)",
+      price: "5.000",
+      unit: "000đ",
+      note: "Bổ sung các module vận hành nâng cao.",
+      features: [
+        "Bao gồm phần lớn Advance",
+        "Xử lý upload PDF/TXT > 10MB",
+        "AI đánh giá performance học sinh trong buổi học",
+        "Tự tạo đề ôn tập theo chương/bài",
+        "Xem tài liệu giáo viên publish trong buổi học",
+        "Xem báo cáo quá trình học tập cá nhân",
+        "Quản lý hồ sơ nhân viên",
+        "Kế toán",
+        "Chatbot tư vấn",
+      ],
+    },
   ];
+  
   
 
   return (
@@ -737,12 +800,11 @@ function Pricing(){
         {/* Grid 3 cột + nhấn card giữa bằng arbitrary-variants */}
         <div
           className="
-            grid gap-6 justify-center
+            grid gap-6
             grid-cols-1
-            sm:[grid-template-columns:repeat(2,22rem)]
-            lg:[grid-template-columns:repeat(3,22rem)]
+            sm:grid-cols-2
+            lg:grid-cols-4
             [grid-auto-rows:1fr]
-                    
           "
         >
           {plans.map((p, index) => (
@@ -1241,11 +1303,12 @@ export default function EduCRMLanding(){
       <Navbar onOpenLogin={onOpenLogin}/>
       <Hero onOpenLogin={onOpenLogin}/>
 
-      <Metrics/>
       <Features/>
       <Pricing/>
      
       <Testimonials/>
+      <Metrics/>
+
       <FAQ/>
       <Contact/>
       <Footer/>
