@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { CheckCircle2, ArrowRight, Sparkles, Shield, Users, BookOpen, Clock, LineChart, Phone, Mail, MapPin, Star, MessageCircle, Menu, X, TrendingUp, Award, Zap, Globe, Lock, GraduationCap } from "lucide-react";
 import axios from "axios";
+import PerformanceOverview from "./components/PerformanceOverview";
+import FeatureRow from "./components/FeatureRow";
+import ChatbotPopup from "./components/ChatbotPopup";
 /**
  * EduCRM White–Blue Landing Page (Gradient Edition)
  * ------------------------------------------------------------
@@ -65,20 +68,23 @@ function Navbar({ onOpenLogin }) {
    <div style={{marginTop: "20px"}} className="fixed top-0 inset-x-0 z-50">
    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className={[
+           className={[
             "flex items-center justify-evenly",
-            "h-16 sm:h-18 px-3 sm:px-4",
-            "bg-white/100 backdrop-blur-md supports-[backdrop-filter]:bg-white/80",
-            "border border-slate-200/60 shadow-sm",
-            "transition-all duration-100",
-            "rounded-2xl", // bo tròn khi đóng menu
+            "h-16 sm:h-18 px-3 sm:px-5",
+            // Nền & hiệu ứng
+            "bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/85",
+            "border border-slate-200/70 ring-1 ring-black/5 shadow-md",
+            // PILL tròn hẳn
+            "rounded-[999px] overflow-hidden",
+            "transition-all duration-150",
             mobileMenuOpen ? "rounded-b-none" : "",
           ].join(" ")}
         >
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="size-12 flex justify-center items-center">
-              <img style={{ maxWidth: "150%" }} src="logo.png" alt="logo" />
+              <a href="/"> <img style={{ maxWidth: "150%" }} src="logo.png" alt="logo" /></a>
+             
             </div>
           </div>
 
@@ -159,7 +165,7 @@ function Hero({ onOpenLogin }) {
   `}
 >
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mt-[80px]">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mt-[90px]">
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="animate-fade-in-up" style={{animationDelay: '0.1s'}}>
@@ -224,192 +230,207 @@ function Metrics() {
     {
       label: "Trung tâm sử dụng",
       value: "500+",
-      icon: <Users size={24} className="text-blue-600"/>,
-      description: "Trung tâm giáo dục tin tưởng"
+      icon: <Users size={22} className="opacity-90" />,
+      description: "Trung tâm giáo dục tin tưởng",
     },
     {
       label: "Người dùng",
       value: "10k+",
-      icon: <TrendingUp size={24} className="text-green-600"/>,
-      description: "Người dùng tích cực"
+      icon: <TrendingUp size={22} className="opacity-90" />,
+      description: "Người dùng tích cực",
     },
     {
       label: "Tăng hiệu suất",
       value: "+32%",
-      icon: <Award size={24} className="text-purple-600"/>,
-      description: "Hiệu quả vận hành"
+      icon: <Award size={22} className="opacity-90" />,
+      description: "Hiệu quả vận hành",
     },
   ];
+
   return (
-    <GSection gradient="primary" className="">
+    <section className="bg-white">
       <div className={`${container} ${section}`}>
         <div className="text-center mb-12 animate-fade-in-up">
-          <h2 className="text-3xl font-bold text-white mb-4 animate-scale-in stagger-1">Số liệu ấn tượng</h2>
-          <p className="text-lg text-white/90 animate-fade-in-up stagger-2">Những con số chứng minh hiệu quả của XinKEdu</p>
+          <h2 className="text-3xl font-bold text-slate-900 mb-4 animate-scale-in stagger-1">
+            Số liệu ấn tượng
+          </h2>
+          <p className="text-lg text-slate-600 animate-fade-in-up stagger-2">
+            Những con số chứng minh hiệu quả của XinKEdu
+          </p>
         </div>
+
         <div className="grid sm:grid-cols-3 gap-8">
           {items.map((item, index) => (
             <div key={item.label} className={`group relative animate-bounce-in stagger-${index + 3}`}>
-              <div className="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 hover:shadow-xl hover:ring-blue-200 transition-all duration-500 hover-lift">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="p-3 rounded-2xl bg-slate-50 group-hover:bg-blue-50 transition-colors duration-300">
-                    {item.icon}
+              {/* Outer gradient border */}
+              <div
+                className="p-[1px] rounded-3xl"
+                style={{ background: GRADIENTS.primary }}
+              >
+                {/* Card */}
+                <div className="rounded-[22px] bg-white p-8 shadow-lg ring-1 ring-slate-200 transition-all duration-500 hover:shadow-xl hover:-translate-y-1.5">
+                  <div className="flex items-center justify-between mb-4">
+                    {/* Icon chip with gradient */}
+                    <div
+                      className="p-3 rounded-2xl text-white transition-all duration-300 group-hover:scale-110"
+                      style={{ background: GRADIENTS.secondary }}
+                    >
+                      {item.icon}
+                    </div>
+
+                    <div className="text-right">
+                      <p className="text-4xl font-extrabold tracking-tight text-slate-900 transition-transform duration-300 group-hover:scale-110">
+                        {item.value}
+                      </p>
+                      <p className="text-sm text-slate-500">{item.description}</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-4xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors duration-300 group-hover:scale-110">{item.value}</p>
-                    <p className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors duration-300">{item.description}</p>
+
+                  <p className="text-lg font-semibold text-slate-800">{item.label}</p>
+
+                  {/* Floating particles (accent with brand colors) */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div
+                      className="w-2 h-2 rounded-full animate-float"
+                      style={{ background: "#3B82F6", animationDelay: "0s" }}
+                    />
+                    <div
+                      className="w-1 h-1 rounded-full animate-float mt-2"
+                      style={{ background: "#22D3EE", animationDelay: "0.45s" }}
+                    />
                   </div>
-                </div>
-                <p className="text-lg font-semibold text-slate-700 group-hover:text-slate-800 transition-colors duration-300">{item.label}</p>
-                
-                {/* Floating particles */}
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-float" style={{animationDelay: '0s'}} />
-                  <div className="w-1 h-1 bg-cyan-400 rounded-full animate-float mt-2" style={{animationDelay: '0.5s'}} />
                 </div>
               </div>
+              {/* subtle glow on hover */}
+              <div
+                className="pointer-events-none absolute -inset-1 rounded-3xl blur-xl opacity-0 group-hover:opacity-40 transition"
+                style={{ background: GRADIENTS.secondary }}
+              />
             </div>
           ))}
         </div>
       </div>
-    </GSection>
+    </section>
   );
 }
 
 
-function FeatureRow({ reverse=false, title, desc, bullets, img, icon }) {
-  return (
-    <div className={`grid lg:grid-cols-2 gap-12 items-center ${reverse ? "lg:grid-flow-dense" : ""}`}>
-      <div className={`${reverse ? "lg:col-start-2" : ""} animate-fade-in-left`}>
-        <div className="group relative">
-          <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-slate-100/60 to-blue-100/40 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="relative rounded-3xl overflow-hidden ring-1 ring-slate-200 shadow-md group-hover:shadow-lg group-hover:ring-blue-200 transition-all duration-500 bg-white hover:scale-105">
-            <img
-              src={img}
-              alt={`${title} - minh họa`}
-              className="w-full h-64 sm:h-80 object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          </div>
-        </div>
-      </div>
-      <div className={`${reverse ? "lg:col-start-1" : ""} space-y-5 animate-fade-in-right`}>
-        <div className="flex items-center gap-4">
-          <div className="p-3 rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100 hover:scale-110 transition-transform duration-300">
-            {icon}
-          </div>
-          <h3 className="text-2xl sm:text-3xl font-semibold text-slate-900">{title}</h3>
-        </div>
-        <p className="text-base text-slate-600 leading-relaxed">{desc}</p>
-        <ul className="space-y-4">
-          {bullets.map((bullet, index) => (
-            <li key={bullet} className="flex items-start gap-3 text-slate-700 group animate-fade-in-up" style={{animationDelay: `${0.1 + index * 0.1}s`}}>
-              <div className="flex-shrink-0 mt-1">
-                <CheckCircle2 className="text-emerald-600 group-hover:text-emerald-700 transition-colors duration-200 animate-pulse" size={18}/>
-              </div>
-              <span className="text-base group-hover:text-slate-900 transition-colors duration-200">{bullet}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
+
+
 
 function Feature() {
   return (
     <section id="features" className="bg-white">
       <div className={`${container} ${section} space-y-24`}>
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">Tính năng nổi bật</h2>
-          <p className="text-xl text-slate-600">Giải pháp toàn diện cho mọi nhu cầu quản lý giáo dục</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">
+            Tính năng nổi bật
+          </h2>
+          <p className="text-xl text-slate-600">
+            Giải pháp toàn diện cho mọi nhu cầu quản lý giáo dục
+          </p>
         </div>
 
-        {/* 1/ Trung tâm xếp lịch dạy cho giáo viên */}
-        <FeatureRow
-          title="Xếp lịch dạy cho giáo viên"
-          desc="Sắp xếp ca dạy trực quan, tránh trùng ca và tự động nhắc lịch qua Zalo/Email."
-          bullets={[
-            "Lịch tuần/tháng, sắp xếp ca dạy",
-            "Cảnh báo trùng phòng/giờ/giáo viên",
-            "Tự động nhắc lịch & đổi ca nhanh",
-          ]}
-          img="schedule.png"
-          icon={<Clock size={28} />}
-        />
-
-        {/* 2/ Giáo viên Tạo đề thi bằng AI */}
+        {/* AI đề thi */}
         <FeatureRow
           reverse
           title="Tạo đề thi bằng AI (nhanh & thông minh)"
           desc="Sinh đề tự động theo chủ đề, độ khó, chuẩn đầu ra. Hỗ trợ nhiều loại câu hỏi và chấm điểm tự động."
           bullets={[
             "Sinh câu hỏi: Trắc nghiệm, Đúng/Sai, Điền khuyết, Tự luận",
-            "Điều chỉnh độ khó, mục tiêu kỹ năng",
-            "Chấm điểm tự động + nhận xét AI",
+            "Điều chỉnh độ khó, kỹ năng & chuẩn đầu ra (Bloom/CEFR)",
+            "Ngân hàng câu hỏi theo chủ đề, tag & mức độ",
+            "Tự động chống trùng câu hỏi & xáo thứ tự đáp án",
+            "Giải thích đáp án, gợi ý chấm & thang điểm",
+          
           ]}
-          img="taode.png"
+          img="taodethi.png"
           icon={<BookOpen size={28} />}
         />
 
-        {/* 3/ Giáo viên Tạo đề thi bằng OCR chụp hình */}
+        {/* OCR đề thi */}
         <FeatureRow
           title="Tạo đề thi từ ảnh (OCR)"
           desc="Chụp/tải ảnh đề thi giấy, hệ thống OCR & chuẩn hóa format, xuất đề trong vài giây."
           bullets={[
-            "Nhận diện chữ Việt/EN chính xác",
-            "Chuẩn hóa bố cục, random phương án",
-            "Xuất Word/PDF sẵn sàng in ấn",
+            "Nhận diện chữ Việt/EN chính xác, chống nhiễu",
+            "Tự động crop/deskew & làm sạch nền",
+            "Chuẩn hóa bố cục, tách câu hỏi/đáp án",
+            "Tạo ngân hàng câu hỏi từ ảnh chỉ với 1 lần chụp",
+            "Random phương án & đánh số tự động",
+         
           ]}
-          img="ocr.png"
+          img="taodeOCR.png"
           icon={<GraduationCap size={28} />}
         />
 
-        {/* 4/ Giáo viên check in / check out */}
-        <FeatureRow
-          reverse
-          title="Check-in / Check-out dạy học"
-          desc="Điểm danh ca dạy bằng một chạm: GPS + ghi chú tức thời."
-          bullets={[
-            "Check-in theo vị trí & thời gian",
-            "Xác thực, ghi chú ca dạy",
-            "Tổng hợp bảng công & phục vụ tính lương",
-          ]}
-          img="checkin.png"
-          icon={<Shield size={28} />}
-        />
-
-        {/* 5/ Nền tảng AI + chatbot hỗ trợ Live */}
+        {/* AI trợ giảng live */}
         <FeatureRow
           title="AI trợ giảng Live & phân tích buổi dạy"
           desc="Theo dõi thời gian thực, gợi ý tương tác, đánh dấu highlight & xuất báo cáo lớp học."
           bullets={[
-            "Hỏi AI những kiến thức mới có trong buổi học",
-            "Lấy ý kiến phản hồi từ học sinh",
-            "Báo cáo sau buổi: highlight, to-do",
+            "Gợi ý quiz/bài tập theo tiến độ trong giờ học",
+            "Hỏi AI kiến thức vừa được giảng để củng cố",
+            "Theo dõi mức độ tương tác & cảnh báo học viên yếu",
+            "Đánh dấu highlight theo mốc thời gian (timestamp)",
+            "Thu phản hồi nhanh (poll) & tổng hợp ý kiến",
+         
           ]}
           img="meeting.png"
           icon={<LineChart size={28} />}
         />
 
-        {/* 6/ Học sinh thi & xem điểm online */}
+        {/* Check-in / out */}
+        <FeatureRow
+          reverse
+          title="Check-in / Check-out dạy học"
+          desc="Điểm danh ca dạy bằng một chạm: GPS + ghi chú tức thời."
+          bullets={[
+            "Check-in theo vị trí & thời gian, hỗ trợ ngoại tuyến",
+            "Ảnh xác thực & ghi chú minh chứng ca dạy",
+            "Cảnh báo đi muộn/về sớm & thống kê chuyên cần",
+            "Tự động đối soát công theo ca/lịch dạy",
+            "Xuất dữ liệu chấm công phục vụ tính lương",
+            
+          ]}
+          img="inout.png"
+          icon={<Shield size={28} />}
+        />
+
+        {/* Xếp lịch dạy */}
+        <FeatureRow
+          title="Xếp lịch dạy cho giáo viên"
+          desc="Sắp xếp ca dạy trực quan, tránh trùng ca và tự động nhắc lịch qua Zalo/Email."
+          bullets={[
+            "Kéo-thả ca dạy theo tuần/tháng, template lịch",
+            "Phát hiện xung đột phòng/giờ/giáo viên theo thời gian thực",
+            "Quản lý nhiều cơ sở/phòng học & thiết bị",
+            "Lọc theo môn, cấp độ, ca, giáo viên & trạng thái",
+            "Đồng bộ lịch với AI nhắc lịch, email/Zalo",
+           
+          ]}
+          img="classm.png"
+          icon={<Clock size={28} />}
+        />
+
+        {/* Thi & xem điểm */}
         <FeatureRow
           reverse
           title="Thi & xem điểm online"
           desc="Học sinh làm bài trên web/mobile, chống gian lận nhẹ, xem điểm & lời giải ngay sau khi nộp."
           bullets={[
-            "Phòng thi online theo lịch",           
-            "Xem điểm, đáp án & lời giải",
-            "Ôn tập, tổng hợp kiến thức",
+            "Phòng thi theo lịch, mã thi & giới hạn thời gian",
+            "Giám sát camera/mic nhẹ nhàng, phát hiện tab-out",
+            "Chấm tự động, hiển thị điểm & thứ hạng tức thì",
+            "Xem đáp án, lời giải & phân tích câu sai",
+            "Thi lại có điều kiện (số lần, ngưỡng điểm, ngân hàng khác)",
           ]}
           img="exam.jpg"
           icon={<CheckCircle2 size={28} />}
         />
 
-        {/* --- Tính năng Đặc biệt --- */}
-        <div className="space-y-8">
+        {/* --- TÍNH NĂNG ĐẶC BIỆT --- */}
+        <div className="space-y-10">
           <div className="text-center max-w-3xl mx-auto">
             <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Tính năng đặc biệt</h3>
             <p className="mt-3 text-slate-600">
@@ -417,182 +438,110 @@ function Feature() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Đặc biệt 1: CRM + Nhân sự */}
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition">
-                <div className="flex items-center gap-3 mb-3">
-                  <Shield className="text-blue-600" size={22} />
-                  <p className="text-lg font-semibold text-slate-900">CRM & Quản lý nhân sự</p>
+          {/* Card 1: CRM & Nhân sự (dùng FeatureRow + ảnh) */}
+          <div className="group relative">
+            <div
+              className="absolute -inset-1 rounded-3xl blur-2xl opacity-0 group-hover:opacity-35 transition duration-500"
+              style={{ background: GRADIENTS.secondary }}
+            />
+            <div className="relative p-[1px] rounded-3xl" style={{ background: GRADIENTS.primary }}>
+              <div className="rounded-[22px] bg-white shadow-lg ring-1 ring-slate-200 overflow-hidden transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1.5">
+                <div className="flex items-center justify-between px-4 sm:px-6 pt-5">
+                  <span
+                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: GRADIENTS.secondary }}
+                  >
+                    ✨ ĐẶC BIỆT
+                  </span>
+                  <div className="relative h-6 w-24 overflow-hidden rounded-full">
+                    <div
+                      className="absolute inset-y-0 -left-16 w-20 opacity-20 group-hover:translate-x-28 transition-transform duration-700"
+                      style={{ background: "linear-gradient(90deg, transparent, #fff, transparent)" }}
+                    />
+                  </div>
                 </div>
-                <ul className="space-y-2 text-slate-700">
-                  <li>• Quản lý lead/khách hàng, pipeline tuyển sinh</li>
-                  <li>• Hồ sơ giáo viên/nhân sự, phân quyền chi tiết</li>
-                  <li>• KPI & bảng công đồng bộ từ check-in/ca dạy</li>
-                </ul>
+
+                <div className="px-4 sm:px-6 pb-6 pt-2">
+                  <FeatureRow
+                    title="CRM & Quản lý nhân sự"
+                    desc="Theo dõi pipeline tuyển sinh, quản lý hồ sơ & phân quyền nhân sự; đồng bộ KPI và bảng công từ ca dạy."
+                    bullets={[
+                      "Pipeline tuyển sinh theo giai đoạn & xác suất",
+                      "Lead scoring, nguồn lead & chăm sóc tự động",
+                      "Hồ sơ giáo viên/nhân sự, hợp đồng & chứng chỉ",
+                      "Phân quyền chi tiết theo vai trò & đơn vị",
+                      "Chấm công/KPI đồng bộ từ check-in & lịch dạy",
+                    ]}
+                    img="crm.jpg"
+                    icon={<Shield size={28} />}
+                  />
+                </div>
+
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-2 h-2 rounded-full animate-float" style={{ background: "#3B82F6", animationDelay: "0s" }} />
+                  <div className="w-1 h-1 rounded-full mt-2 animate-float" style={{ background: "#22D3EE", animationDelay: "0.4s" }} />
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Đặc biệt 2: Kế toán */}
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition">
-                <div className="flex items-center gap-3 mb-3">
-                  <LineChart className="text-emerald-600" size={22} />
-                  <p className="text-lg font-semibold text-slate-900">Hỗ trợ kế toán</p>
+          {/* Card 2: Hỗ trợ Kế toán (dùng FeatureRow + ảnh, đảo chiều) */}
+          <div className="group relative">
+            <div
+              className="absolute -inset-1 rounded-3xl blur-2xl opacity-0 group-hover:opacity-35 transition duration-500"
+              style={{ background: GRADIENTS.secondary }}
+            />
+            <div className="relative p-[1px] rounded-3xl" style={{ background: GRADIENTS.primary }}>
+              <div className="rounded-[22px] bg-white shadow-lg ring-1 ring-slate-200 overflow-hidden transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1.5">
+                <div className="flex items-center justify-between px-4 sm:px-6 pt-5">
+                  <span
+                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold text-white"
+                    style={{ background: GRADIENTS.secondary }}
+                  >
+                    ✨ ĐẶC BIỆT
+                  </span>
+                  <div className="relative h-6 w-24 overflow-hidden rounded-full">
+                    <div
+                      className="absolute inset-y-0 -left-16 w-20 opacity-20 group-hover:translate-x-28 transition-transform duration-700"
+                      style={{ background: "linear-gradient(90deg, transparent, #fff, transparent)" }}
+                    />
+                  </div>
                 </div>
-                <ul className="space-y-2 text-slate-700">
-                  <li>• Thu học phí, công nợ, phiếu thu/chi</li>
-                  <li>• Báo cáo doanh thu – chi phí theo lớp, khóa</li>
-                  <li>• Xuất file kế toán & đối soát minh bạch</li>
-                </ul>
+
+                <div className="px-4 sm:px-6 pb-6 pt-2">
+                  <FeatureRow
+                    reverse
+                    title="Hỗ trợ kế toán"
+                    desc="Quản lý thu học phí, công nợ; báo cáo doanh thu/chi phí theo lớp–khóa; xuất file đối soát minh bạch."
+                    bullets={[
+                      "Lập hóa đơn/phiếu thu học phí theo kỳ, gói",
+                      "Theo dõi công nợ & nhắc phí tự động đa kênh",
+                      "Phiếu thu/chi & nhật ký quỹ minh bạch",
+                      "Báo cáo doanh thu–chi phí theo lớp/khóa/cơ sở",
+                      "Xuất file kế toán (Excel/CSV) & đối soát nhanh",
+
+                    ]}
+                    img="ketoan.png"
+                    icon={<LineChart size={28} />}
+                  />
+                </div>
+
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-2 h-2 rounded-full animate-float" style={{ background: "#3B82F6", animationDelay: "0s" }} />
+                  <div className="w-1 h-1 rounded-full mt-2 animate-float" style={{ background: "#22D3EE", animationDelay: "0.4s" }} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* --- End: Tính năng Đặc biệt --- */}
+        {/* --- END: TÍNH NĂNG ĐẶC BIỆT --- */}
       </div>
     </section>
   );
 }
-function Features() {
-  const items = [
-    {
-      title: "Xếp lịch dạy cho giáo viên",
-      desc: "Sắp xếp ca dạy trực quan, tránh trùng lịch, tự động nhắc lịch qua Zalo/Email để mọi người luôn đúng giờ.",
-      bullets: [
-        "Lịch tuần/tháng, kéo-thả ca dạy",
-        "Cảnh báo trùng phòng/giờ/giáo viên",
-        "Nhắc lịch & đổi ca nhanh",
-      ],
-      icon: <Clock size={28} />,
-    },
-    {
-      title: "Tạo đề thi bằng AI",
-      desc: "Sinh đề theo chủ đề, độ khó, chuẩn đầu ra. Hỗ trợ nhiều loại câu hỏi và gợi ý chấm điểm nhanh.",
-      bullets: [
-        "Trắc nghiệm/Đúng-Sai/Điền khuyết/Tự luận",
-        "Điều chỉnh độ khó, mục tiêu kỹ năng",
-        "Nhận xét AI + phân tích điểm",
-      ],
-      icon: <BookOpen size={28} />,
-    },
-    {
-      title: "Tạo đề từ ảnh (OCR)",
-      desc: "Chụp/tải ảnh đề giấy, hệ thống OCR hoá và chuẩn hóa câu hỏi. Xuất Word/PDF trong vài giây.",
-      bullets: [
-        "Nhận diện tiếng Việt/EN chính xác",
-        "Giữ ký hiệu, chuẩn hóa bố cục",
-        "Random phương án, chống lộ đáp án",
-      ],
-      icon: <GraduationCap size={28} />,
-    },
-    {
-      title: "Check-in / Check-out dạy học",
-      desc: "Điểm danh ca dạy bằng một chạm, kèm GPS và ghi chú. Tự tổng hợp bảng công hỗ trợ tính lương.",
-      bullets: [
-        "Theo dõi vị trí & thời gian",
-        "Xác thực + ghi chú ca dạy",
-        "Bảng công tự động",
-      ],
-      icon: <Shield size={28} />,
-    },
-    {
-      title: "AI trợ giảng Live",
-      desc: "Theo dõi buổi dạy thời gian thực, gợi ý tương tác, đánh dấu highlight và xuất báo cáo sau buổi.",
-      bullets: [
-        "Hỏi-đáp AI trong lớp",
-        "Lấy phản hồi học sinh",
-        "Báo cáo: highlight, to-do",
-      ],
-      icon: <LineChart size={28} />,
-    },
-    {
-      title: "Thi & xem điểm online",
-      desc: "Tổ chức thi trên web/mobile, chống gian lận nhẹ, công bố điểm và lời giải ngay sau khi nộp.",
-      bullets: [
-        "Phòng thi theo lịch",
-        "Xem điểm + đáp án",
-        "Ôn tập & tổng hợp kiến thức",
-      ],
-      icon: <CheckCircle2 size={28} />,
-    },
-  ];
 
-  return (
-    <section id="features" className="bg-white">
-      <div className={`${container} ${section} space-y-16 lg:space-y-20`}>
-        <div className="text-center max-w-3xl mx-auto animate-fade-in-up">
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 animate-scale-in stagger-1">
-            Tính năng nổi bật
-          </h2>
-          <p className="text-xl text-slate-600 animate-fade-in-up stagger-2">
-            Giải pháp toàn diện cho mọi nhu cầu quản lý giáo dục
-          </p>
-        </div>
 
-        {/* GRID features: không ảnh minh họa */}
-        <div className="grid gap-6 md:gap-8 md:grid-cols-2">
-          {items.map((it, i) => (
-            <FeatureCard key={i} {...it} index={i} />
-          ))}
-        </div>
 
-        {/* --- Tính năng Đặc biệt --- */}
-        <div className="space-y-8 animate-fade-in-up stagger-3">
-          <div className="text-center max-w-3xl mx-auto">
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 animate-bounce-in stagger-4">
-              Tính năng đặc biệt
-            </h3>
-            <p className="mt-3 text-slate-600 animate-fade-in-up stagger-5">
-              Bộ công cụ nâng cao giúp trung tâm vận hành trơn tru và minh bạch.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* CRM + Nhân sự */}
-            <div className="group relative animate-slide-up-stagger stagger-6">
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-300 hover-lift">
-                <div className="flex items-center gap-3 mb-3">
-                  <Shield className="text-blue-600" size={22} />
-                  <p className="text-lg font-semibold text-slate-900 group-hover:text-blue-700 transition-colors duration-300">
-                    CRM & Quản lý nhân sự
-                  </p>
-                </div>
-                <ul className="space-y-2 text-slate-700">
-                  <li className="group-hover:translate-x-1 transition-transform duration-300">• Quản lý lead/khách hàng, pipeline tuyển sinh</li>
-                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '50ms'}}>• Hồ sơ giáo viên/nhân sự, phân quyền chi tiết</li>
-                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '100ms'}}>• KPI & bảng công đồng bộ từ check-in/ca dạy</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Kế toán */}
-            <div className="group relative animate-slide-up-stagger stagger-6">
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200 group-hover:shadow-xl group-hover:ring-blue-200 transition-all duration-300 hover-lift">
-                <div className="flex items-center gap-3 mb-3">
-                  <LineChart className="text-emerald-600" size={22} />
-                  <p className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors duration-300">
-                    Hỗ trợ kế toán
-                  </p>
-                </div>
-                <ul className="space-y-2 text-slate-700">
-                  <li className="group-hover:translate-x-1 transition-transform duration-300">• Thu học phí, công nợ, phiếu thu/chi</li>
-                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '50ms'}}>• Doanh thu – chi phí theo lớp, khóa</li>
-                  <li className="group-hover:translate-x-1 transition-transform duration-300" style={{transitionDelay: '100ms'}}>• Xuất file kế toán & đối soát minh bạch</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* --- End: Tính năng Đặc biệt --- */}
-      </div>
-    </section>
-  );
-}
 
 /** Card không dùng ảnh, icon + text + bullets */
 function FeatureCard({ icon, title, desc, bullets, index = 0 }) {
@@ -1112,87 +1061,106 @@ function Contact() {
           {/* RIGHT: Form */}
           <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in-up stagger-6">
             <div className="rounded-2xl p-8 shadow-xl shadow-blue-600/10 ring-1 ring-slate-200 bg-white">
-              <h4 className="text-2xl font-bold text-slate-900 mb-6">
-                Gửi yêu cầu tư vấn
-              </h4>
+              <h4 className="text-2xl font-bold text-slate-900 mb-6">Gửi yêu cầu tư vấn</h4>
 
-              <div className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="block text-sm font-semibold text-slate-700 mb-2"
-                  >
-                    Họ và tên <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    autoComplete="name"
-                    required
-                    className="w-full h-11 px-4 rounded-xl border border-slate-200
-                               bg-white/90 text-slate-900 placeholder:text-slate-400
-                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
-                               outline-none transition-all"
-                    placeholder="Nguyễn Văn A"
-                  />
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+  {/* Họ và tên */}
+  <div className="space-y-2">
+    <label htmlFor="contact-name" className="block text-sm font-semibold text-slate-700">
+      Họ và tên <span className="text-rose-500">*</span>
+    </label>
+    <input
+      id="contact-name"
+      type="text"
+      name="name"
+      value={formData.name}
+      onChange={handleChange}
+      autoComplete="name"
+      required
+      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60 outline-none transition-all"
+      placeholder="Nguyễn Văn A"
+    />
+  </div>
 
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-sm font-semibold text-slate-700 mb-2"
-                  >
-                    Email <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    autoComplete="email"
-                    required
-                    className="w-full h-11 px-4 rounded-xl border border-slate-200
-                               bg-white/90 text-slate-900 placeholder:text-slate-400
-                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
-                               outline-none transition-all"
-                    placeholder="ban@congty.com"
-                  />
-                </div>
+  {/* Trung tâm đang hoạt động */}
+  <div className="space-y-2">
+    <label htmlFor="contact-center" className="block text-sm font-semibold text-slate-700">
+      Trung tâm đang hoạt động <span className="text-rose-500">*</span>
+    </label>
+    <input
+      id="contact-center"
+      type="text"
+      name="center"
+      value={formData.center}
+      onChange={handleChange}
+      required
+      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60 outline-none transition-all"
+      placeholder="VD: XinK Language Center"
+    />
+  </div>
 
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-sm font-semibold text-slate-700 mb-2"
-                  >
-                    Nhu cầu của bạn <span className="text-rose-500">*</span>
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    rows={4}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200
-                               bg-white/90 text-slate-900 placeholder:text-slate-400
-                               focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60
-                               outline-none transition-all resize-none"
-                    placeholder="Mô tả ngắn (số lớp, tính năng cần, thời gian dự kiến...)"
-                  />
-                </div>
-              </div>
+  {/* Email */}
+  <div className="space-y-2">
+    <label htmlFor="contact-email" className="block text-sm font-semibold text-slate-700">
+      Email <span className="text-rose-500">*</span>
+    </label>
+    <input
+      id="contact-email"
+      type="email"
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+      autoComplete="email"
+      required
+      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60 outline-none transition-all"
+      placeholder="ban@congty.com"
+    />
+  </div>
+
+  {/* Số điện thoại (VN) */}
+  <div className="space-y-2">
+    <label htmlFor="contact-phone" className="block text-sm font-semibold text-slate-700">
+      Số điện thoại liên hệ <span className="text-rose-500">*</span>
+    </label>
+    <input
+      id="contact-phone"
+      type="tel"
+      name="phone"
+      value={formData.phone}
+      onChange={handleChange}
+      inputMode="tel"
+      required
+      pattern="^(\+84|0)\d{9,10}$"
+      className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60 outline-none transition-all"
+      placeholder="0862706996 hoặc +84862706996"
+    />
+    <p className="text-xs text-slate-500">Định dạng: 0XXXXXXXXX hoặc +84XXXXXXXXX</p>
+  </div>
+
+  {/* Nhu cầu (full width) */}
+  <div className="sm:col-span-2 space-y-2">
+    <label htmlFor="contact-message" className="block text-sm font-semibold text-slate-700">
+      Nhu cầu của bạn <span className="text-rose-500">*</span>
+    </label>
+    <textarea
+      id="contact-message"
+      rows={4}
+      name="message"
+      value={formData.message}
+      onChange={handleChange}
+      required
+      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/90 text-slate-900 placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-200/60 outline-none transition-all resize-none"
+      placeholder="Mô tả ngắn (số lớp, tính năng cần, thời gian dự kiến...)"
+    />
+  </div>
+</div>
+
 
               <GButton
                 as="button"
                 type="submit"
                 gradient="secondary"
-                className="w-full mt-8 h-12 text-base font-semibold
-                           justify-center ring-1 ring-white/20 hover:ring-white/30
-                           focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-white"
+                className="w-full mt-8 h-12 text-base font-semibold justify-center ring-1 ring-white/20 hover:ring-white/30 focus:outline-none focus:ring-2 focus:ring-white/60 focus:ring-offset-2 focus:ring-offset-white"
               >
                 <MessageCircle size={20} className="mr-2" />
                 Gửi yêu cầu tư vấn
@@ -1301,17 +1269,21 @@ export default function EduCRMLanding(){
   return (
     <div className="bg-white text-slate-800">
       <Navbar onOpenLogin={onOpenLogin}/>
+   
       <Hero onOpenLogin={onOpenLogin}/>
 
-      <Features/>
+      <Feature/>
       <Pricing/>
      
-      <Testimonials/>
       <Metrics/>
+      <Testimonials/>
 
       <FAQ/>
       <Contact/>
       <Footer/>
+
+      {/* Floating Chatbot */}
+      <ChatbotPopup />
 
       {loginOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center">
