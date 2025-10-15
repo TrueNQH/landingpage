@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckCircle2, ArrowRight, Sparkles, Shield, Users, BookOpen, Clock, LineChart, Phone, Mail, MapPin, Star, MessageCircle, Menu, X, TrendingUp, Award, Zap, Globe, Lock, GraduationCap } from "lucide-react";
-
+import axios from "axios";
 /**
  * EduCRM White–Blue Landing Page (Gradient Edition)
  * ------------------------------------------------------------
@@ -902,10 +902,15 @@ function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    const res = await axios.post("https://xink-edu-backend-459095746983.asia-southeast1.run.app/contact", formData);
+    console.log(res);
+    if(res.status === 200){
     alert("Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong vòng 24h.");
+    } else {
+      alert("Lỗi khi gửi liên hệ! Vui lòng thử lại.");
+    }
   };
 
   const handleChange = (e) => {
