@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Bot, Send } from "lucide-react"; // ⬅️ icon chatbot + gửi
+import { useLanguage } from "../contexts/LanguageContext";
+import { getTranslation } from "../translations";
 
 export default function ChatbotPopup() {
   const [open, setOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
+  
   const [messages, setMessages] = useState([
-    { id: 1, role: "bot", text: "Xin chào! Tôi có thể giúp gì cho bạn?" },
+    { id: 1, role: "bot", text: t('chatbot.greeting') },
   ]);
   const [input, setInput] = useState("");
   const panelRef = useRef(null);
@@ -24,7 +29,7 @@ export default function ChatbotPopup() {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, role: "bot", text: "Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm." },
+        { id: Date.now() + 1, role: "bot", text: t('chatbot.response') },
       ]);
     }, 400);
   };
@@ -33,7 +38,7 @@ export default function ChatbotPopup() {
     <div className="fixed bottom-5 right-5 z-[120]">
       {/* Floating button */}
       <button
-        aria-label="Mở chatbot"
+        aria-label={t('chatbot.open')}
         onClick={() => setOpen((v) => !v)}
         className="relative rounded-full shadow-lg ring-1 ring-slate-200 text-white w-14 h-14 grid place-items-center hover:scale-105 transition"
         style={{ background: "linear-gradient(135deg, #22D3EE, #3B82F6)" }} // secondary
@@ -59,10 +64,10 @@ export default function ChatbotPopup() {
               <span className="inline-flex items-center justify-center rounded-lg bg-white/15 p-1.5">
                 <Bot size={16} />
               </span>
-              XinKEdu Chat
+              {t('chatbot.title')}
             </div>
             <button
-              aria-label="Đóng"
+              aria-label={t('chatbot.close')}
               onClick={() => setOpen(false)}
               className="rounded-lg px-2 py-1 hover:bg-white/10"
             >
@@ -98,7 +103,7 @@ export default function ChatbotPopup() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                placeholder="Nhập tin nhắn..."
+                placeholder={t('chatbot.placeholder')}
                 className="flex-1 h-10 px-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-100 outline-none"
               />
               <button
@@ -107,7 +112,7 @@ export default function ChatbotPopup() {
                 style={{ background: "linear-gradient(135deg, #22D3EE, #3B82F6)" }} // secondary
               >
                 <Send size={16} />
-                Gửi
+                {t('chatbot.send')}
               </button>
             </div>
           </div>

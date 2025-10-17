@@ -15,8 +15,8 @@ function GradientPadFrame({
           "linear-gradient(135deg, rgba(59,130,246,0.12), rgba(13,148,136,0.10))",
       }}
     >
-      <div className="rounded-[22px] bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
-        <div className="p-2 sm:p-3">{children}</div>
+      <div className="rounded-[22px] bg-white shadow-xl overflow-hidden">
+        <div className="p-2 sm:p-3 bg-white">{children}</div>
       </div>
     </div>
   );
@@ -46,8 +46,8 @@ export default function FeatureRow({
   imageAlt = title,
 }: FeatureRowProps) {
   return (
-    <section className="bg-white dark:bg-slate-950">
-      <div className={`${containerClass} ${sectionClass}`}>
+    <section className="">
+      <div className={`${containerClass} ${sectionClass} bg-white`}>
         <div
           className={`grid items-start gap-10 lg:gap-14 lg:grid-cols-2 ${
             reverse ? "lg:[&>div:first-child]:order-2" : ""
@@ -59,13 +59,13 @@ export default function FeatureRow({
               {icon ? (
                 <span className="shrink-0 text-sky-500">{icon}</span>
               ) : null}
-              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+              <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
                 {title}
               </h3>
             </div>
 
             {desc ? (
-              <p className="mt-3 text-slate-600 dark:text-slate-300">
+              <p className="mt-3 text-slate-600">
                 {desc}
               </p>
             ) : null}
@@ -74,7 +74,7 @@ export default function FeatureRow({
               {bullets.map((t, i) => (
                 <li
                   key={i}
-                  className="relative pl-9 text-slate-700 dark:text-slate-300 leading-relaxed"
+                  className="relative pl-9 text-slate-700 leading-relaxed"
                 >
                   <CheckCircle2 className="absolute left-0 top-1 h-5 w-5 text-emerald-500" />
                   {t}
